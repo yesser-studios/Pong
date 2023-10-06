@@ -25,7 +25,7 @@ SOFTWARE.
 
 MonoGame is licensed under the following licenses:
 
-﻿Microsoft Public License (Ms-PL)
+Microsoft Public License (Ms-PL)
 MonoGame - Copyright © 2009-2023 The MonoGame Team
 
 All rights reserved.
