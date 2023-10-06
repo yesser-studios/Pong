@@ -9,8 +9,7 @@ namespace Pong
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private Texture2D _texture;
-        private Vector2 _position;
+        GameObject ball = new();
 
         public Game1()
         {
