@@ -5,7 +5,7 @@ namespace Pong
 {
     internal class GameObject
     {
-        private Texture2D _texture;
-        private Vector2 _position;
+        public Texture2D Texture { get; }
+        public Vector2 Position { get; }
     }
 }
