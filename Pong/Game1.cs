@@ -75,7 +75,6 @@ namespace Pong
             GamePadState plr2GamepadState = GamePad.GetState(PlayerIndex.Two);
 
             if (plr1GamepadState.Buttons.Start == ButtonState.Pressed
-                || plr2GamepadState.Buttons.Start == ButtonState.Pressed
                 || keyboard.IsKeyDown(Keys.Escape))
                 Exit();
 
