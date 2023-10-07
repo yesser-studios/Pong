@@ -79,6 +79,8 @@ namespace Pong
 
             bool leftUsedKeyboard = false;
             bool rightUsedKeyboard = false;
+            bool leftUsedStick = false;
+            bool rightUsedStick = false;
 
             if (plr1GamepadState.Buttons.Start == ButtonState.Pressed
                 || keyboard.IsKeyDown(Keys.Escape))
@@ -114,10 +116,28 @@ namespace Pong
 
             #region Gamepad controls
             if ((plr1GamepadState.ThumbSticks.Left.Y > gamepadDeadzone || plr1GamepadState.ThumbSticks.Left.Y < -gamepadDeadzone) && !leftUsedKeyboard)
+            {
                 leftPad.MoveNoOOS(0, -plr1GamepadState.ThumbSticks.Left.Y * padSpeed * gamepadSensitivity, gameResolution.X, gameResolution.Y);
+                leftUsedStick = true;
+            }
 
             if ((plr2GamepadState.ThumbSticks.Left.Y > gamepadDeadzone || plr2GamepadState.ThumbSticks.Left.Y < -gamepadDeadzone) && !rightUsedKeyboard)
+            {
                 rightPad.MoveNoOOS(0, -plr2GamepadState.ThumbSticks.Left.Y * padSpeed * gamepadSensitivity, gameResolution.X, gameResolution.Y);
+                rightUsedStick = true;
+            }
+
+            if (plr1GamepadState.DPad.Up == ButtonState.Pressed && !leftUsedKeyboard && !leftUsedStick)
+                leftPad.MoveNoOOS(0, -padSpeed, gameResolution.X, gameResolution.Y);
+
+            if (plr1GamepadState.DPad.Down == ButtonState.Pressed && !leftUsedKeyboard && !leftUsedStick)
+                leftPad.MoveNoOOS(0, padSpeed, gameResolution.X, gameResolution.Y);
+
+            if (plr2GamepadState.DPad.Up == ButtonState.Pressed && !rightUsedKeyboard && !rightUsedStick)
+                rightPad.MoveNoOOS(0, -padSpeed, gameResolution.X, gameResolution.Y);
+
+            if (plr2GamepadState.DPad.Down == ButtonState.Pressed && !rightUsedKeyboard && !rightUsedStick)
+                rightPad.MoveNoOOS(0, padSpeed, gameResolution.X, gameResolution.Y);
             #endregion
 
             base.Update(gameTime);
