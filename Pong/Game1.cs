@@ -10,6 +10,7 @@ namespace Pong
 
         private int padXOffset = 10;
         private float padScale = 0.5f;
+        private float padSpeed = 7.5f;
 
         private RenderTarget2D _renderTarget;
         private Rectangle _renderTargetDest;
@@ -69,10 +70,27 @@ namespace Pong
 
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            KeyboardState keyboard = Keyboard.GetState();
+            GamePadState plr1GamepadState = GamePad.GetState(PlayerIndex.One);
+            GamePadState plr2GamepadState = GamePad.GetState(PlayerIndex.Two);
+
+            if (plr1GamepadState.Buttons.Start == ButtonState.Pressed
+                || plr2GamepadState.Buttons.Start == ButtonState.Pressed
+                || keyboard.IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            // Keyboard controls
+            if (keyboard.IsKeyDown(Keys.W))
+                leftPad.MoveNoOOS(0, -padSpeed, gameResolution.X, gameResolution.Y);
+
+            if (keyboard.IsKeyDown(Keys.S))
+                leftPad.MoveNoOOS(0, padSpeed, gameResolution.X, gameResolution.Y);
+
+            if (keyboard.IsKeyDown(Keys.Up))
+                rightPad.MoveNoOOS(0, -padSpeed, gameResolution.X, gameResolution.Y);
+
+            if (keyboard.IsKeyDown(Keys.Down))
+                rightPad.MoveNoOOS(0, padSpeed, gameResolution.X, gameResolution.Y);
 
             base.Update(gameTime);
         }
