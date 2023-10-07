@@ -12,6 +12,9 @@ namespace Pong
         private float padScale = 0.5f;
         private float padSpeed = 7.5f;
 
+        private float gamepadDeadzone = 0.1f;
+        private float gamepadSensitivity = 1.5f;
+
         private RenderTarget2D _renderTarget;
         private Rectangle _renderTargetDest;
         private GraphicsDeviceManager _graphics;
@@ -74,22 +77,47 @@ namespace Pong
             GamePadState plr1GamepadState = GamePad.GetState(PlayerIndex.One);
             GamePadState plr2GamepadState = GamePad.GetState(PlayerIndex.Two);
 
+            bool leftUsedKeyboard = false;
+            bool rightUsedKeyboard = false;
+
             if (plr1GamepadState.Buttons.Start == ButtonState.Pressed
                 || keyboard.IsKeyDown(Keys.Escape))
                 Exit();
 
             #region Keyboard controls
             if (keyboard.IsKeyDown(Keys.W))
+            {
                 leftPad.MoveNoOOS(0, -padSpeed, gameResolution.X, gameResolution.Y);
+                leftUsedKeyboard = true;
+            }
 
             if (keyboard.IsKeyDown(Keys.S))
+            {
                 leftPad.MoveNoOOS(0, padSpeed, gameResolution.X, gameResolution.Y);
+                leftUsedKeyboard = true;
+            }
 
             if (keyboard.IsKeyDown(Keys.Up))
+            {
                 rightPad.MoveNoOOS(0, -padSpeed, gameResolution.X, gameResolution.Y);
+                rightUsedKeyboard = true;
+            }
+                
 
             if (keyboard.IsKeyDown(Keys.Down))
+            {
                 rightPad.MoveNoOOS(0, padSpeed, gameResolution.X, gameResolution.Y);
+                rightUsedKeyboard = true;
+            }
+                
+            #endregion
+
+            #region Gamepad controls
+            if ((plr1GamepadState.ThumbSticks.Left.Y > gamepadDeadzone || plr1GamepadState.ThumbSticks.Left.Y < -gamepadDeadzone) && !leftUsedKeyboard)
+                leftPad.MoveNoOOS(0, -plr1GamepadState.ThumbSticks.Left.Y * padSpeed * gamepadSensitivity, gameResolution.X, gameResolution.Y);
+
+            if ((plr2GamepadState.ThumbSticks.Left.Y > gamepadDeadzone || plr2GamepadState.ThumbSticks.Left.Y < -gamepadDeadzone) && !rightUsedKeyboard)
+                leftPad.MoveNoOOS(0, -plr2GamepadState.ThumbSticks.Left.Y * padSpeed * gamepadSensitivity, gameResolution.X, gameResolution.Y);
             #endregion
 
             base.Update(gameTime);
