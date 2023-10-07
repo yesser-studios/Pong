@@ -8,12 +8,17 @@ namespace Pong
     {
         private Point gameResolution = new(960, 720);
 
+        private int padXOffset = 10;
+        private float padScale = 0.5f;
+
         private RenderTarget2D _renderTarget;
         private Rectangle _renderTargetDest;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
         private GameObject ball;
+        private GameObject leftPad;
+        private GameObject rightPad;
 
         public Game1()
         {
@@ -44,6 +49,18 @@ namespace Pong
                 1f,
                 _spriteBatch);
 
+            leftPad = new(
+                Content.Load<Texture2D>("Pad"),
+                new(padXOffset, gameResolution.Y / 2),
+                padScale,
+                _spriteBatch);
+
+            rightPad = new(
+                Content.Load<Texture2D>("Pad"),
+                new(gameResolution.X - padXOffset, gameResolution.Y / 2),
+                padScale,
+                _spriteBatch);
+
             _renderTarget = new(GraphicsDevice, gameResolution.X, gameResolution.Y);
             _renderTargetDest = GetRenderTargetDestination(gameResolution, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
 
@@ -68,6 +85,8 @@ namespace Pong
 
             _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
             ball.Draw();
+            leftPad.Draw();
+            rightPad.Draw();
             _spriteBatch.End();
 
             base.Draw(gameTime);
