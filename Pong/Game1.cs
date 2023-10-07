@@ -6,7 +6,7 @@ namespace Pong
 {
     public class Game1 : Game
     {
-        private Point gameResolution = new(480, 360);
+        private Point gameResolution = new(960, 720);
 
         private RenderTarget2D _renderTarget;
         private Rectangle _renderTargetDest;
@@ -41,7 +41,7 @@ namespace Pong
             ball = new(
                 Content.Load<Texture2D>("Ball"),
                 new(gameResolution.X / 2, gameResolution.Y / 2),
-                2f,
+                1f,
                 _spriteBatch);
 
             _renderTarget = new(GraphicsDevice, gameResolution.X, gameResolution.Y);
@@ -66,7 +66,7 @@ namespace Pong
 
             GraphicsDevice.Clear(Color.Black);
 
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
             ball.Draw();
             _spriteBatch.End();
 
@@ -74,7 +74,7 @@ namespace Pong
 
             GraphicsDevice.SetRenderTarget(null);
 
-            _spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
             _spriteBatch.Draw(_renderTarget, _renderTargetDest, Color.White);
             _spriteBatch.End();
         }
