@@ -20,7 +20,7 @@ namespace Pong
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
-        private GameObject ball;
+        private Ball ball;
         private GameObject leftPad;
         private GameObject rightPad;
 
