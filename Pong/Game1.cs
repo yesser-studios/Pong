@@ -79,7 +79,7 @@ namespace Pong
                 || keyboard.IsKeyDown(Keys.Escape))
                 Exit();
 
-            // Keyboard controls
+            #region Keyboard controls
             if (keyboard.IsKeyDown(Keys.W))
                 leftPad.MoveNoOOS(0, -padSpeed, gameResolution.X, gameResolution.Y);
 
@@ -91,6 +91,7 @@ namespace Pong
 
             if (keyboard.IsKeyDown(Keys.Down))
                 rightPad.MoveNoOOS(0, padSpeed, gameResolution.X, gameResolution.Y);
+            #endregion
 
             base.Update(gameTime);
         }
