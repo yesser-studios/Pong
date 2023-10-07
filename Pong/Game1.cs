@@ -13,7 +13,7 @@ namespace Pong
         private float padSpeed = 7.5f;
 
         private float gamepadDeadzone = 0.1f;
-        private float gamepadSensitivity = 1.5f;
+        private float gamepadSensitivity = 1.1f;
 
         private RenderTarget2D _renderTarget;
         private Rectangle _renderTargetDest;
@@ -117,7 +117,7 @@ namespace Pong
                 leftPad.MoveNoOOS(0, -plr1GamepadState.ThumbSticks.Left.Y * padSpeed * gamepadSensitivity, gameResolution.X, gameResolution.Y);
 
             if ((plr2GamepadState.ThumbSticks.Left.Y > gamepadDeadzone || plr2GamepadState.ThumbSticks.Left.Y < -gamepadDeadzone) && !rightUsedKeyboard)
-                leftPad.MoveNoOOS(0, -plr2GamepadState.ThumbSticks.Left.Y * padSpeed * gamepadSensitivity, gameResolution.X, gameResolution.Y);
+                rightPad.MoveNoOOS(0, -plr2GamepadState.ThumbSticks.Left.Y * padSpeed * gamepadSensitivity, gameResolution.X, gameResolution.Y);
             #endregion
 
             base.Update(gameTime);
