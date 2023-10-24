@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System.Xml.Serialization;
 
-namespace Pong
+namespace Pong.Game
 {
     internal class GameObject
     {
