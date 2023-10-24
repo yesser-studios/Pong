@@ -5,27 +5,72 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pong.Desktop", "Pong.Desktop\Pong.Desktop.csproj", "{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pong.Game", "Pong.Game\Pong.Game.csproj", "{10A664A8-5819-4C7E-ADCE-951C7D332D0B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pong.UWP", "Pong.UWP\Pong.UWP.csproj", "{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Pong.Game.Shared", "Pong.Game.Shared\Pong.Game.Shared.shproj", "{A0CDBD0E-3A41-42B7-9425-A838BC2C7383}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|ARM = Debug|ARM
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|ARM = Release|ARM
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Debug|ARM.Build.0 = Debug|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Debug|x64.Build.0 = Debug|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Debug|x86.Build.0 = Debug|Any CPU
 		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{10A664A8-5819-4C7E-ADCE-951C7D332D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{10A664A8-5819-4C7E-ADCE-951C7D332D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{10A664A8-5819-4C7E-ADCE-951C7D332D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{10A664A8-5819-4C7E-ADCE-951C7D332D0B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Release|ARM.Build.0 = Release|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Release|x64.ActiveCfg = Release|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Release|x64.Build.0 = Release|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Release|x86.ActiveCfg = Release|Any CPU
+		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Release|x86.Build.0 = Release|Any CPU
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|Any CPU.Build.0 = Debug|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|Any CPU.Deploy.0 = Debug|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|ARM.ActiveCfg = Debug|ARM
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|ARM.Build.0 = Debug|ARM
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|ARM.Deploy.0 = Debug|ARM
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|x64.ActiveCfg = Debug|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|x64.Build.0 = Debug|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|x64.Deploy.0 = Debug|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|x86.ActiveCfg = Debug|x86
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|x86.Build.0 = Debug|x86
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Debug|x86.Deploy.0 = Debug|x86
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|Any CPU.ActiveCfg = Release|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|Any CPU.Build.0 = Release|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|Any CPU.Deploy.0 = Release|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|ARM.ActiveCfg = Release|ARM
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|ARM.Build.0 = Release|ARM
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|ARM.Deploy.0 = Release|ARM
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|x64.ActiveCfg = Release|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|x64.Build.0 = Release|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|x64.Deploy.0 = Release|x64
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|x86.ActiveCfg = Release|x86
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|x86.Build.0 = Release|x86
+		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BB974AEB-89FE-4937-B042-303CE2889259}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		Pong.Game.Shared\Pong.Game.Shared.projitems*{45a0694f-73de-4e25-86e2-3070b6aaafdb}*SharedItemsImports = 4
+		Pong.Game.Shared\Pong.Game.Shared.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13
+		Pong.Game.Shared\Pong.Game.Shared.projitems*{b1f840b1-e539-461d-8b2b-2555bcfe4ba9}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

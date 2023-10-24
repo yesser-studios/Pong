@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0</TargetFramework>
@@ -27,11 +27,11 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Pong.Game\Pong.Game.csproj" />
-    <MonoGameContentReference Include="..\Pong.Game\Content\Content.mgcb" />
+    <MonoGameContentReference Include="..\Pong.Game.Shared\Content\Content.mgcb" />
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />
   </Target>
+  <Import Project="..\Pong.Game.Shared\Pong.Game.Shared.projitems" Label="Shared" />
 </Project>

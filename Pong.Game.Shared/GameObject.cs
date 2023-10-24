@@ -23,7 +23,7 @@ namespace Pong.Game
 
         public void Draw()
         {
-            spriteBatch.Draw(Texture, Position, null, Color.White, 0, new(Texture.Width / 2, Texture.Height / 2), Scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(Texture, Position, null, Color.White, 0, new Vector2(Texture.Width / 2, Texture.Height / 2), Scale, SpriteEffects.None, 0);
         }
 
         public void Move(float x, float y)
@@ -31,7 +31,7 @@ namespace Pong.Game
             x += Position.X;
             y += Position.Y;            
             
-            Position = new(x, y);
+            Position = new Vector2(x, y);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Pong.Game
             if (x + (Texture.Width / 2 * Scale) > screenWidth) x = screenWidth - (Texture.Width * Scale / 2);
             if (y + (Texture.Height / 2 * Scale) > screenHeight) y = screenHeight - (Texture.Height * Scale / 2);
 
-            Position = new(x, y);
+            Position = new Vector2(x, y);
         }
     }
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6efba8a9-a407-4029-bdd0-651d22a87386</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Pong.Game.Shared</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Ball.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Game1.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)GameObject.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)Content\Ball.png" />
+    <None Include="$(MSBuildThisFileDirectory)Content\bin\DesktopGL\Ball.xnb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\bin\DesktopGL\Content\Ball.xnb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\bin\DesktopGL\Content\Pad.xnb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\bin\DesktopGL\Pad.xnb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\bin\WindowsStoreApp\Content\Ball.xnb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\bin\WindowsStoreApp\Content\Pad.xnb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\.mgstats" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\Ball.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\net6.0\Content\.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\net6.0\Content\.mgstats" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\net6.0\Content\Ball.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\net6.0\Content\Pad.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\Pad.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\WindowsStoreApp\Content\.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\WindowsStoreApp\Content\.mgstats" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\WindowsStoreApp\Content\Ball.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\obj\WindowsStoreApp\Content\Pad.mgcontent" />
+    <None Include="$(MSBuildThisFileDirectory)Content\Pad.png" />
+  </ItemGroup>
+</Project>

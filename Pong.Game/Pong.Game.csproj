@@ -7,4 +7,5 @@
       <PrivateAssets>All</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <Import Project="..\Pong.Game.Shared\Pong.Game.Shared.projitems" Label="Shared" />
 </Project>

@@ -6,7 +6,7 @@ namespace Pong.Game
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        private Point gameResolution = new(960, 720);
+        private Point gameResolution = new Point(960, 720);
 
         private int padXOffset = 10;
         private float padScale = 0.5f;
@@ -47,25 +47,25 @@ namespace Pong.Game
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            ball = new(
+            ball = new Ball(
                 Content.Load<Texture2D>("Ball"),
-                new(gameResolution.X / 2, gameResolution.Y / 2),
+                new Vector2(gameResolution.X / 2, gameResolution.Y / 2),
                 1f,
                 _spriteBatch);
 
-            leftPad = new(
+            leftPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
-                new(padXOffset, gameResolution.Y / 2),
+                new Vector2(padXOffset, gameResolution.Y / 2),
                 padScale,
                 _spriteBatch);
 
-            rightPad = new(
+            rightPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
-                new(gameResolution.X - padXOffset, gameResolution.Y / 2),
+                new Vector2(gameResolution.X - padXOffset, gameResolution.Y / 2),
                 padScale,
                 _spriteBatch);
 
-            _renderTarget = new(GraphicsDevice, gameResolution.X, gameResolution.Y);
+            _renderTarget = new RenderTarget2D(GraphicsDevice, gameResolution.X, gameResolution.Y);
             _renderTargetDest = GetRenderTargetDestination(gameResolution, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
 
             // TODO: use this.Content to load your game content here
