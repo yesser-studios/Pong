@@ -5,6 +5,8 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pong.Desktop", "Pong.Desktop\Pong.Desktop.csproj", "{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pong.Game", "Pong.Game\Pong.Game.csproj", "{10A664A8-5819-4C7E-ADCE-951C7D332D0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{10A664A8-5819-4C7E-ADCE-951C7D332D0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{10A664A8-5819-4C7E-ADCE-951C7D332D0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{10A664A8-5819-4C7E-ADCE-951C7D332D0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{10A664A8-5819-4C7E-ADCE-951C7D332D0B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
