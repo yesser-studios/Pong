@@ -54,7 +54,7 @@ namespace Pong.Game
             Random rnd = new Random();
             float output = rnd.Next(1, 9) * 0.1f;
             int negate = rnd.Next(0, 2);
-            return output * (-negate);
+            return output * (negate == 1 ? -1 : 1);
         }
 
         protected override void LoadContent()
