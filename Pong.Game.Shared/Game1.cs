@@ -10,6 +10,8 @@ namespace Pong.Game
     {
         private const float BALL_SPEED = 5f;
 
+        private Random rnd = new Random();
+
         private Point gameResolution = new Point(960, 720);
 
         private bool gameStarted = false;
@@ -51,10 +53,8 @@ namespace Pong.Game
 
         protected float GenerateRandomBallYVelocity()
         {
-            Random rnd = new Random();
             float output = rnd.Next(1, 9) * 0.1f;
-            int negate = rnd.Next(0, 2);
-            return output * (negate == 1 ? -1 : 1);
+            return output * (rnd.Next(0, 2) == 1 ? -1 : 1);
         }
 
         protected override void LoadContent()
@@ -62,7 +62,7 @@ namespace Pong.Game
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
              // Generates a random Y velocity.
-            Vector2 ballVelocity = new Vector2(1f, GenerateRandomBallYVelocity());
+            Vector2 ballVelocity = new Vector2(rnd.Next(0, 2) == 1 ? -1 : 1, GenerateRandomBallYVelocity());
  
             leftPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
