@@ -63,16 +63,7 @@ namespace Pong.Game
 
              // Generates a random Y velocity.
             Vector2 ballVelocity = new Vector2(1f, GenerateRandomBallYVelocity());
-
-            ball = new Ball(
-                Content.Load<Texture2D>("Ball"),
-                new Vector2(gameResolution.X / 2, gameResolution.Y / 2),
-                1f,
-                _spriteBatch,
-                gameResolution.X,
-                gameResolution.Y,
-                ballVelocity * BALL_SPEED);
-
+ 
             leftPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
                 new Vector2(padXOffset, gameResolution.Y / 2),
@@ -88,6 +79,17 @@ namespace Pong.Game
                 _spriteBatch,
                 gameResolution.X,
                 gameResolution.Y);
+
+            ball = new Ball(
+                Content.Load<Texture2D>("Ball"),
+                new Vector2(gameResolution.X / 2, gameResolution.Y / 2),
+                1f,
+                _spriteBatch,
+                gameResolution.X,
+                gameResolution.Y,
+                ballVelocity * BALL_SPEED,
+                leftPad,
+                rightPad);
 
             _renderTarget = new RenderTarget2D(GraphicsDevice, gameResolution.X, gameResolution.Y);
             _renderTargetDest = GetRenderTargetDestination(gameResolution, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);

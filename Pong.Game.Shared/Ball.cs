@@ -10,6 +10,9 @@ namespace Pong.Game
 {
     public class Ball : GameObject
     {
+        GameObject leftPad;
+        GameObject rightPad;
+
         public Ball(
             Texture2D texture,
             Vector2 position,
@@ -17,14 +20,21 @@ namespace Pong.Game
             SpriteBatch spriteBatch,
             float screenWidth,
             float screenHeight,
-            Vector2 initialVelocity) : base(
+            Vector2 initialVelocity,
+            GameObject leftPad,
+            GameObject rightPad) : base(
                 texture,
                 position,
                 scale,
                 spriteBatch,
                 screenWidth,
                 screenHeight)
-            => Velocity = initialVelocity;
+        {
+
+            Velocity = initialVelocity;
+            this.leftPad = leftPad;
+            this.rightPad = rightPad;
+        }
 
         public override void MoveByVelocity()
         {
