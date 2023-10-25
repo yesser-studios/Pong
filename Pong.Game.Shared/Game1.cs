@@ -1,13 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Pong.Game
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         private const float BALL_SPEED = 3f;
-        private readonly Vector2 defaultBallVelocity = new Vector2(1f, 0.7f);
+        private readonly Vector2 defaultBallVelocity = new Vector2(1f, 0.8f);
 
         private Point gameResolution = new Point(960, 720);
 
@@ -48,9 +49,20 @@ namespace Pong.Game
             base.Initialize();
         }
 
+        protected float GenerateRandomBallYVelocity()
+        {
+            Random rnd = new Random();
+            float output = rnd.Next(1, 9) * 0.1f;
+            int negate = rnd.Next(0, 2);
+            return output - negate;
+        }
+
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+             // Generates a random Y velocity.
+            Vector2 ballVelocity = new Vector2(1f, GenerateRandomBallYVelocity());
 
             ball = new Ball(
                 Content.Load<Texture2D>("Ball"),
