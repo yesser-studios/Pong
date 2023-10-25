@@ -8,7 +8,7 @@ namespace Pong.Game
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        private const float BALL_SPEED = 3f;
+        private const float BALL_SPEED = 5f;
 
         private Point gameResolution = new Point(960, 720);
 
