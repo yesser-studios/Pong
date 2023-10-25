@@ -42,7 +42,7 @@ namespace Pong.Game
             Position = new Vector2(x, y);
         }
 
-        public void MoveByVelocity()
+        public virtual void MoveByVelocity()
         {
             float x = Position.X + Velocity.X;
             float y = Position.Y + Velocity.Y;
