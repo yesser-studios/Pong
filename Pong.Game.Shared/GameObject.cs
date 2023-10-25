@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Xml.Serialization;
 
 namespace Pong.Game
 {
@@ -15,18 +14,29 @@ namespace Pong.Game
 
     public class GameObject
     {
-        private readonly SpriteBatch spriteBatch;
+        protected readonly float screenWidth;
+        protected readonly float screenHeight;
+        protected readonly SpriteBatch spriteBatch;
+
         public Texture2D Texture { get; }
         public Vector2 Position { get; set; }
         public float Scale { get; }
         public Vector2 Velocity {  get; set; } = Vector2.Zero;
 
-        public GameObject(Texture2D texture, Vector2 position, float scale, SpriteBatch spriteBatch)
+        public GameObject(
+            Texture2D texture,
+            Vector2 position,
+            float scale,
+            SpriteBatch spriteBatch,
+            float screenWidth,
+            float screenHeight)
         {
             Texture = texture;
             Position = position;
             Scale = scale;
             this.spriteBatch = spriteBatch;
+            this.screenWidth = screenWidth;
+            this.screenHeight = screenHeight;
         }
 
         public void Draw()
@@ -53,22 +63,22 @@ namespace Pong.Game
         /// <summary>
         /// Moves and checks if the object is out of the screen with the given width and height.
         /// </summary>
-        public void MoveNoOOS (float x, float y, float screenWidth, float screenHeight)
+        public void MoveNoOOS (float x, float y)
         {
             Move(x, y);
 
-            MoveOnScreen(screenWidth, screenHeight);
+            MoveOnScreen();
         }
 
         /// <summary>
         /// Checks whether or not the object is out of the screen.
         /// </summary>
-        public void MoveOnScreen(float screenWidth, float screenHeight)
+        public void MoveOnScreen()
         {
             float x = Position.X;
             float y = Position.Y;
 
-            ScreenSide screenSide = CheckOOS(screenWidth, screenHeight);
+            ScreenSide screenSide = CheckOOS();
 
             if (screenSide == ScreenSide.Left) x = Texture.Width * Scale / 2;
             if (screenSide == ScreenSide.Top) y = Texture.Height * Scale / 2;
@@ -78,7 +88,7 @@ namespace Pong.Game
             Position = new Vector2(x, y);
         }
 
-        public ScreenSide CheckOOS(float screenWidth, float screenHeight)
+        public ScreenSide CheckOOS()
         {
             ScreenSide outOfScreen = ScreenSide.Center;
             if (Position.X - (Texture.Width * Scale / 2) < 0) outOfScreen = ScreenSide.Left;
