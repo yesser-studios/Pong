@@ -31,9 +31,13 @@ namespace Pong.Game
             base.MoveByVelocity();
         }
 
-        public Ball(Texture2D texture, Vector2 position, float scale, SpriteBatch spriteBatch, Vector2 initialVelocity) : base(texture, position, scale, spriteBatch)
+        protected void Bounce()
         {
-            Velocity = initialVelocity;
+            ScreenSide side = CheckOOS();
+
+            if (side == ScreenSide.Bottom
+                || side == ScreenSide.Top)
+                Velocity = new Vector2(Velocity.X, -Velocity.Y);
         }
     }
 }
