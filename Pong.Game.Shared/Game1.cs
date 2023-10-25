@@ -211,6 +211,7 @@ namespace Pong.Game
             base.Draw(gameTime);
 
             GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(new Color(30, 30, 30));
 
             _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
             _spriteBatch.Draw(_renderTarget, _renderTargetDest, Color.White);
