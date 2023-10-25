@@ -51,7 +51,8 @@ namespace Pong.Game
                 Content.Load<Texture2D>("Ball"),
                 new Vector2(gameResolution.X / 2, gameResolution.Y / 2),
                 1f,
-                _spriteBatch);
+                _spriteBatch,
+                new Vector2(0f, 1f));
 
             leftPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),

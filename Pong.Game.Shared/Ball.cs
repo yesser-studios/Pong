@@ -10,7 +10,10 @@ namespace Pong.Game
 {
     internal class Ball : GameObject
     {
-        public Ball(Texture2D texture, Vector2 position, float scale, SpriteBatch spriteBatch) : base(texture, position, scale, spriteBatch)
-        { }
+
+        public Ball(Texture2D texture, Vector2 position, float scale, SpriteBatch spriteBatch, Vector2 initialVelocity) : base(texture, position, scale, spriteBatch)
+        {
+            Velocity = initialVelocity;
+        }
     }
 }
