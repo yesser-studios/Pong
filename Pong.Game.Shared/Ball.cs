@@ -39,15 +39,27 @@ namespace Pong.Game
         public override void MoveByVelocity()
         {
             base.MoveByVelocity();
+
+            Bounce();
         }
 
         protected void Bounce()
         {
             ScreenSide side = CheckOOS();
 
+            Vector2 newVelocity = Velocity;
+
             if (side == ScreenSide.Bottom
                 || side == ScreenSide.Top)
-                Velocity = new Vector2(Velocity.X, -Velocity.Y);
+                newVelocity.Y = -newVelocity.Y;
+
+            if (CollidesWith(leftPad))
+                newVelocity.X = MathF.Abs(newVelocity.X);
+
+            if (CollidesWith(rightPad))
+                newVelocity.X = -MathF.Abs(newVelocity.X);
+
+            Velocity = newVelocity;
         }
     }
 }

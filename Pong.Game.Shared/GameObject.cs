@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Drawing;
 
 namespace Pong.Game
 {
@@ -40,9 +41,16 @@ namespace Pong.Game
         }
 
         public void Draw()
-        {
-            spriteBatch.Draw(Texture, Position, null, Color.White, 0, new Vector2(Texture.Width / 2, Texture.Height / 2), Scale, SpriteEffects.None, 0);
-        }
+            => spriteBatch.Draw(
+                Texture,
+                Position,
+                null,
+                Microsoft.Xna.Framework.Color.White,
+                0,
+                new Vector2(Texture.Width / 2, Texture.Height / 2),
+                Scale,
+                SpriteEffects.None,
+                0);
 
         public void Move(float x, float y)
         {
@@ -97,6 +105,25 @@ namespace Pong.Game
             if (Position.Y + (Texture.Height / 2 * Scale) > screenHeight) outOfScreen = ScreenSide.Bottom;
 
             return outOfScreen;
+        }
+
+        public bool CollidesWith(GameObject other)
+        {
+            if (other == null) return false;
+            
+            RectangleF thisObjRect = new RectangleF(
+                Position.X,
+                Position.Y,
+                Texture.Width * Scale,
+                Texture.Height * Scale);
+
+            RectangleF otherObjRect = new RectangleF(
+                other.Position.X,
+                other.Position.Y,
+                other.Texture.Width * other.Scale,
+                other.Texture.Height * other.Scale);
+
+            return thisObjRect.IntersectsWith(otherObjRect);
         }
     }
 }
