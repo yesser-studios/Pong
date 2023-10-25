@@ -157,7 +157,9 @@ namespace Pong.Game
             }
             #endregion
 
-            if (leftUsedKeyboard || rightUsedKeyboard || leftUsedStick || rightUsedStick || leftUsedDPad || rightUsedDPad)
+            if (leftUsedKeyboard || rightUsedKeyboard
+                || leftUsedStick || rightUsedStick
+                || leftUsedDPad || rightUsedDPad)
                 gameStarted = true;
 
             if (gameStarted)
