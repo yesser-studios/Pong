@@ -8,6 +8,8 @@ namespace Pong.Game
     {
         private Point gameResolution = new Point(960, 720);
 
+        private bool gameStarted = false;
+
         private int padXOffset = 10;
         private float padScale = 0.5f;
         private float padSpeed = 7.5f;
@@ -82,6 +84,8 @@ namespace Pong.Game
             bool rightUsedKeyboard = false;
             bool leftUsedStick = false;
             bool rightUsedStick = false;
+            bool leftUsedDPad = false;
+            bool rightUsedDPad = false;
 
             if (plr1GamepadState.Buttons.Start == ButtonState.Pressed
                 || keyboard.IsKeyDown(Keys.Escape))
@@ -105,14 +109,14 @@ namespace Pong.Game
                 rightPad.MoveNoOOS(0, -padSpeed, gameResolution.X, gameResolution.Y);
                 rightUsedKeyboard = true;
             }
-                
+
 
             if (keyboard.IsKeyDown(Keys.Down))
             {
                 rightPad.MoveNoOOS(0, padSpeed, gameResolution.X, gameResolution.Y);
                 rightUsedKeyboard = true;
             }
-                
+
             #endregion
 
             #region Gamepad controls
@@ -129,17 +133,32 @@ namespace Pong.Game
             }
 
             if (plr1GamepadState.DPad.Up == ButtonState.Pressed && !leftUsedKeyboard && !leftUsedStick)
+            {
                 leftPad.MoveNoOOS(0, -padSpeed, gameResolution.X, gameResolution.Y);
+                leftUsedDPad = true;
+            }
 
             if (plr1GamepadState.DPad.Down == ButtonState.Pressed && !leftUsedKeyboard && !leftUsedStick)
+            {
                 leftPad.MoveNoOOS(0, padSpeed, gameResolution.X, gameResolution.Y);
+                leftUsedDPad = true;
+            }
 
             if (plr2GamepadState.DPad.Up == ButtonState.Pressed && !rightUsedKeyboard && !rightUsedStick)
+            {
                 rightPad.MoveNoOOS(0, -padSpeed, gameResolution.X, gameResolution.Y);
+                rightUsedDPad = true;
+            }
 
             if (plr2GamepadState.DPad.Down == ButtonState.Pressed && !rightUsedKeyboard && !rightUsedStick)
+            {
                 rightPad.MoveNoOOS(0, padSpeed, gameResolution.X, gameResolution.Y);
+                rightUsedDPad = true;
+            }
             #endregion
+
+            if (leftUsedKeyboard || rightUsedKeyboard || leftUsedStick || rightUsedStick || leftUsedDPad || rightUsedDPad)
+                gameStarted = true;
 
             base.Update(gameTime);
         }
