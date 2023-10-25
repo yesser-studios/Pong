@@ -4,10 +4,18 @@ using System.Xml.Serialization;
 
 namespace Pong.Game
 {
-    internal class GameObject
+    public enum ScreenSide
+    {
+        Top,
+        Bottom,
+        Left,
+        Right,
+        Center
+    }
+
+    public class GameObject
     {
         private readonly SpriteBatch spriteBatch;
-
         public Texture2D Texture { get; }
         public Vector2 Position { get; set; }
         public float Scale { get; }
@@ -49,23 +57,36 @@ namespace Pong.Game
         {
             Move(x, y);
 
-            NoOOS(screenWidth, screenHeight);
+            MoveOnScreen(screenWidth, screenHeight);
         }
 
         /// <summary>
         /// Checks whether or not the object is out of the screen.
         /// </summary>
-        public void NoOOS(float screenWidth, float screenHeight)
+        public void MoveOnScreen(float screenWidth, float screenHeight)
         {
             float x = Position.X;
             float y = Position.Y;
 
-            if (x - (Texture.Width * Scale / 2) < 0) x = Texture.Width * Scale / 2;
-            if (y - (Texture.Height * Scale / 2) < 0) y = Texture.Height * Scale / 2;
-            if (x + (Texture.Width / 2 * Scale) > screenWidth) x = screenWidth - (Texture.Width * Scale / 2);
-            if (y + (Texture.Height / 2 * Scale) > screenHeight) y = screenHeight - (Texture.Height * Scale / 2);
+            ScreenSide screenSide = CheckOOS(screenWidth, screenHeight);
+
+            if (screenSide == ScreenSide.Left) x = Texture.Width * Scale / 2;
+            if (screenSide == ScreenSide.Top) y = Texture.Height * Scale / 2;
+            if (screenSide == ScreenSide.Right) x = screenWidth - (Texture.Width * Scale / 2);
+            if (screenSide == ScreenSide.Bottom) y = screenHeight - (Texture.Height * Scale / 2);
 
             Position = new Vector2(x, y);
+        }
+
+        public ScreenSide CheckOOS(float screenWidth, float screenHeight)
+        {
+            ScreenSide outOfScreen = ScreenSide.Center;
+            if (Position.X - (Texture.Width * Scale / 2) < 0) outOfScreen = ScreenSide.Left;
+            if (Position.Y - (Texture.Height * Scale / 2) < 0) outOfScreen = ScreenSide.Top;
+            if (Position.X + (Texture.Width / 2 * Scale) > screenWidth) outOfScreen = ScreenSide.Right;
+            if (Position.Y + (Texture.Height / 2 * Scale) > screenHeight) outOfScreen = ScreenSide.Bottom;
+
+            return outOfScreen;
         }
     }
 }
