@@ -110,20 +110,11 @@ namespace Pong.Game
         public bool CollidesWith(GameObject other)
         {
             if (other == null) return false;
-            
-            RectangleF thisObjRect = new RectangleF(
-                Position.X,
-                Position.Y,
-                Texture.Width * Scale,
-                Texture.Height * Scale);
 
-            RectangleF otherObjRect = new RectangleF(
-                other.Position.X,
-                other.Position.Y,
-                other.Texture.Width * other.Scale,
-                other.Texture.Height * other.Scale);
-
-            return thisObjRect.IntersectsWith(otherObjRect);
+            return (Position.X < other.Position.X + other.Texture.Width * other.Scale
+                || Position.X + Texture.Width * Scale > other.Position.X
+                || Position.Y < other.Position.Y + other.Texture.Height * other.Scale
+                || Position.Y + Texture.Height * Scale > other.Position.Y);
         }
     }
 }
