@@ -2,13 +2,13 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.IO;
 
 namespace Pong.Game
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         private const float BALL_SPEED = 3f;
-        private readonly Vector2 defaultBallVelocity = new Vector2(1f, 0.8f);
 
         private Point gameResolution = new Point(960, 720);
 
@@ -54,7 +54,7 @@ namespace Pong.Game
             Random rnd = new Random();
             float output = rnd.Next(1, 9) * 0.1f;
             int negate = rnd.Next(0, 2);
-            return output - negate;
+            return output * (-negate);
         }
 
         protected override void LoadContent()
@@ -69,7 +69,7 @@ namespace Pong.Game
                 new Vector2(gameResolution.X / 2, gameResolution.Y / 2),
                 1f,
                 _spriteBatch,
-                defaultBallVelocity * BALL_SPEED);
+                ballVelocity * BALL_SPEED);
 
             leftPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
@@ -179,7 +179,7 @@ namespace Pong.Game
 
             if (gameStarted)
                 ball.MoveByVelocity();
-
+            
             base.Update(gameTime);
         }
 
