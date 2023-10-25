@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Drawing;
 
 namespace Pong.Game
 {
@@ -24,6 +23,11 @@ namespace Pong.Game
         public float Scale { get; }
         public Vector2 Velocity {  get; set; } = Vector2.Zero;
 
+        public float Width { get => Texture.Width * Scale; }
+        public float Height { get => Texture.Height * Scale; }
+        public float X { get => Position.X; }
+        public float Y { get => Position.Y; }
+
         public GameObject(
             Texture2D texture,
             Vector2 position,
@@ -45,7 +49,7 @@ namespace Pong.Game
                 Texture,
                 Position,
                 null,
-                Microsoft.Xna.Framework.Color.White,
+                Color.White,
                 0,
                 new Vector2(Texture.Width / 2, Texture.Height / 2),
                 Scale,
@@ -111,10 +115,7 @@ namespace Pong.Game
         {
             if (other == null) return false;
 
-            return (Position.X < other.Position.X + other.Texture.Width * other.Scale
-                || Position.X + Texture.Width * Scale > other.Position.X
-                || Position.Y < other.Position.Y + other.Texture.Height * other.Scale
-                || Position.Y + Texture.Height * Scale > other.Position.Y);
+            return (X + Width >= other.X) && (other.X + other.Width >= X) && (Y + Height >= other.Y) && (other.Y + other.Height >= Y);
         }
     }
 }
