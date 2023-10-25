@@ -160,6 +160,9 @@ namespace Pong.Game
             if (leftUsedKeyboard || rightUsedKeyboard || leftUsedStick || rightUsedStick || leftUsedDPad || rightUsedDPad)
                 gameStarted = true;
 
+            if (gameStarted)
+                ball.MoveByVelocity();
+
             base.Update(gameTime);
         }
 
