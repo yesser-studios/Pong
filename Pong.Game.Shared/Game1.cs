@@ -6,6 +6,8 @@ namespace Pong.Game
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        const float BALL_SPEED = 3f;
+
         private Point gameResolution = new Point(960, 720);
 
         private bool gameStarted = false;
@@ -54,7 +56,7 @@ namespace Pong.Game
                 new Vector2(gameResolution.X / 2, gameResolution.Y / 2),
                 1f,
                 _spriteBatch,
-                new Vector2(0f, 1f));
+                new Vector2(1f, 1f) * BALL_SPEED);
 
             leftPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
