@@ -91,10 +91,15 @@ namespace Pong.Game
                 leftPad,
                 rightPad);
 
-            _renderTarget = new RenderTarget2D(GraphicsDevice, gameResolution.X, gameResolution.Y);
-            _renderTargetDest = GetRenderTargetDestination(gameResolution, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight);
+            _renderTarget = new RenderTarget2D(
+                GraphicsDevice,
+                gameResolution.X,
+                gameResolution.Y);
 
-            // TODO: use this.Content to load your game content here
+            _renderTargetDest = GetRenderTargetDestination(
+                gameResolution,
+                _graphics.PreferredBackBufferWidth,
+                _graphics.PreferredBackBufferHeight);
         }
 
         protected override void Update(GameTime gameTime)
