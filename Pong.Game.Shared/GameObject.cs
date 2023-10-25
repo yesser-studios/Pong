@@ -34,6 +34,14 @@ namespace Pong.Game
             Position = new Vector2(x, y);
         }
 
+        public void MoveByVelocity()
+        {
+            float x = Position.X + Velocity.X;
+            float y = Position.Y + Velocity.Y;
+
+            Position = new Vector2(x, y);
+        }
+
         /// <summary>
         /// Moves and checks if the object is out of the screen with the given width and height.
         /// </summary>
