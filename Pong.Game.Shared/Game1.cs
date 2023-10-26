@@ -34,6 +34,8 @@ namespace Pong.Game
         private GameObject leftPad;
         private GameObject rightPad;
 
+        private Texture2D ballTex;
+
         private int leftScore,
             rightScore = 0;
 
@@ -72,22 +74,40 @@ namespace Pong.Game
             {
                 case ScreenSide.Left:
                     leftScore++;
+                    gameStarted = false;
+                    GenerateBall();
                     break;
                 case ScreenSide.Right:
+                    gameStarted = false;
                     rightScore++;
+                    GenerateBall();
                     break;
                 default:
                     return;
             }
         }
 
+        private void GenerateBall()
+        {
+            // Generates a random Y velocity.
+            Vector2 ballVelocity = new Vector2(rnd.Next(0, 2) == 1 ? -1 : 1, GenerateRandomBallYVelocity());
+
+            ball = new Ball(
+                ballTex,
+                new Vector2(gameResolution.X / 2, gameResolution.Y / 2),
+                1f,
+                _spriteBatch,
+                gameResolution.X,
+                gameResolution.Y,
+                ballVelocity * BALL_SPEED,
+                leftPad,
+                rightPad);
+        }
+
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-             // Generates a random Y velocity.
-            Vector2 ballVelocity = new Vector2(rnd.Next(0, 2) == 1 ? -1 : 1, GenerateRandomBallYVelocity());
- 
             leftPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
                 new Vector2(padXOffset, gameResolution.Y / 2),
@@ -104,16 +124,9 @@ namespace Pong.Game
                 gameResolution.X,
                 gameResolution.Y);
 
-            ball = new Ball(
-                Content.Load<Texture2D>("Ball"),
-                new Vector2(gameResolution.X / 2, gameResolution.Y / 2),
-                1f,
-                _spriteBatch,
-                gameResolution.X,
-                gameResolution.Y,
-                ballVelocity * BALL_SPEED,
-                leftPad,
-                rightPad);
+            ballTex = Content.Load<Texture2D>("Ball");
+
+            GenerateBall();
 
             _font = Content.Load<SpriteFont>("GameFont");
 

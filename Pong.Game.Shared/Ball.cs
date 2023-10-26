@@ -63,7 +63,7 @@ namespace Pong.Game
         /// </summary>
         public ScreenSide CheckScored()
         {
-            if (X + (Width / 2) > screenWidth)
+            if (X - (Width / 2) > screenWidth)
                 return ScreenSide.Right;
             if (X + (Width / 2) < 0)
                 return ScreenSide.Left;
