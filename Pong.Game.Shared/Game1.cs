@@ -36,9 +36,11 @@ namespace Pong.Game
         private int leftScore,
             rightScore = 0;
 
+        /// <summary>
+        /// Whether left/right stopped after landing a goal.
+        /// </summary>
         private bool leftStopped,
             rightStopped = false;
-        // Whether left/right stopped after landing a goal.
 
         public Game1()
         {
