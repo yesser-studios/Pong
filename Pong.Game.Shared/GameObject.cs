@@ -116,7 +116,10 @@ namespace Pong.Game
         {
             if (other == null) return false;
 
-            return (X + Width / 2 >= other.X - other.Width / 2) && (other.X + other.Width / 2 >= X - Width / 2) && (Y + Height / 2 >= other.Y - other.Height / 2) && (other.Y + other.Height / 2 >= Y - Height / 2);
+            return (X + Width / 2 >= other.X - other.Width / 2)
+                && (other.X + other.Width / 2 >= X - Width / 2)
+                && (Y + Height / 2 >= other.Y - other.Height / 2)
+                && (other.Y + other.Height / 2 >= Y - Height / 2);
         }
     }
 }
