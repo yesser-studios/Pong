@@ -27,6 +27,7 @@ namespace Pong.Game
         private Rectangle _renderTargetDest;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        private SpriteFont _font;
 
         private Ball ball;
         private GameObject leftPad;
@@ -34,6 +35,10 @@ namespace Pong.Game
 
         private int leftScore,
             rightScore = 0;
+
+        private bool leftStopped,
+            rightStopped = false;
+        // Whether left/right stopped after landing a goal.
 
         public Game1()
         {
@@ -44,8 +49,6 @@ namespace Pong.Game
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             _graphics.IsFullScreen = true;
@@ -108,6 +111,8 @@ namespace Pong.Game
                 ballVelocity * BALL_SPEED,
                 leftPad,
                 rightPad);
+
+            _font = Content.Load<SpriteFont>("GameFont");
 
             _renderTarget = new RenderTarget2D(
                 GraphicsDevice,
@@ -211,11 +216,22 @@ namespace Pong.Game
             if (gameStarted)
                 ball.MoveByVelocity();
 
-            ScreenSide scored = ball.CheckScored();
-            if (scored != ScreenSide.Center)
-                Scored(scored);
+            if (gameStarted)
+            {
+                ScreenSide scored = ball.CheckScored();
+                if (scored != ScreenSide.Center)
+                    Scored(scored);
+            }
             
             base.Update(gameTime);
+        }
+
+        private void WriteStatusText(string text)
+        {
+            Vector2 textMiddlePoint = _font.MeasureString(text) / 2;
+            // Places text in center of the screen
+            Vector2 position = new Vector2(gameResolution.X / 2, gameResolution.Y / 10);
+            _spriteBatch.DrawString(_font, text, position, Color.White, 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
         }
 
         protected override void Draw(GameTime gameTime)
@@ -228,6 +244,7 @@ namespace Pong.Game
             ball.Draw();
             leftPad.Draw();
             rightPad.Draw();
+            WriteStatusText($"{leftScore} - {rightScore}");
             _spriteBatch.End();
 
             base.Draw(gameTime);

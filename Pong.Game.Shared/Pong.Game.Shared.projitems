@@ -25,6 +25,7 @@
     <None Include="$(MSBuildThisFileDirectory)Content\bin\WindowsStoreApp\Content\Ball.xnb" />
     <None Include="$(MSBuildThisFileDirectory)Content\bin\WindowsStoreApp\Content\Pad.xnb" />
     <None Include="$(MSBuildThisFileDirectory)Content\Content.mgcb" />
+    <None Include="$(MSBuildThisFileDirectory)Content\GameFont.spritefont" />
     <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\.mgcontent" />
     <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\.mgstats" />
     <None Include="$(MSBuildThisFileDirectory)Content\obj\DesktopGL\Ball.mgcontent" />
