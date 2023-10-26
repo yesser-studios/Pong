@@ -57,5 +57,18 @@ namespace Pong.Game
 
             Velocity = newVelocity;
         }
+        
+        /// <summary>
+        /// Checks whether the ball surpassed the left or right edge of the screen.
+        /// </summary>
+        public ScreenSide CheckScored()
+        {
+            if (X + (Width / 2) > screenWidth)
+                return ScreenSide.Right;
+            if (X + (Width / 2) < 0)
+                return ScreenSide.Left;
+
+            return ScreenSide.Center;
+        }
     }
 }
