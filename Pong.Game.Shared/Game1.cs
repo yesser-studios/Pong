@@ -32,6 +32,9 @@ namespace Pong.Game
         private GameObject leftPad;
         private GameObject rightPad;
 
+        private int leftScore,
+            rightScore = 0;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -55,6 +58,21 @@ namespace Pong.Game
         {
             float output = rnd.Next(1, 9) * 0.1f;
             return output * (rnd.Next(0, 2) == 1 ? -1 : 1);
+        }
+
+        protected void Scored(ScreenSide side)
+        {
+            switch (side)
+            {
+                case ScreenSide.Left:
+                    leftScore++;
+                    break;
+                case ScreenSide.Right:
+                    rightScore++;
+                    break;
+                default:
+                    return;
+            }
         }
 
         protected override void LoadContent()
@@ -192,6 +210,10 @@ namespace Pong.Game
 
             if (gameStarted)
                 ball.MoveByVelocity();
+
+            ScreenSide scored = ball.CheckScored();
+            if (scored != ScreenSide.Center)
+                Scored(scored);
             
             base.Update(gameTime);
         }
