@@ -15,6 +15,7 @@ namespace Pong.Game
         private Point gameResolution = new Point(960, 720);
 
         private bool gameStarted = false;
+        private bool showStartMessage = true;
 
         private int padXOffset = 10;
         private float padScale = 0.5f;
@@ -210,10 +211,29 @@ namespace Pong.Game
             }
             #endregion
 
-            if (leftUsedKeyboard || rightUsedKeyboard
+            bool moved = leftUsedKeyboard || rightUsedKeyboard
                 || leftUsedStick || rightUsedStick
-                || leftUsedDPad || rightUsedDPad)
+                || leftUsedDPad || rightUsedDPad;
+
+            bool leftMoved = leftUsedKeyboard
+                || leftUsedStick
+                || leftUsedDPad;
+
+            bool rightMoved = rightUsedKeyboard
+                || rightUsedStick
+                || rightUsedDPad;
+
+            if ((leftMoved && leftStopped) || (rightMoved && rightStopped))
+            {
                 gameStarted = true;
+                showStartMessage = false;
+            }
+
+            if (!leftMoved)
+                leftStopped = true;
+
+            if (!rightMoved)
+                rightStopped = true;
 
             if (gameStarted)
                 ball.MoveByVelocity();
@@ -246,7 +266,11 @@ namespace Pong.Game
             ball.Draw();
             leftPad.Draw();
             rightPad.Draw();
-            WriteStatusText($"{leftScore} - {rightScore}");
+            WriteStatusText(showStartMessage ?
+                "Left: W-S/Gamepad 1 stick/Gamepad 1 Dpad Up-Down\n"
+                    + "Right: Up-Down Arrow/Gamepad 2 stick/Gamepad 2 Dpad Up-Down\n"
+                    + "Move to start"
+                : $"{leftScore} - {rightScore}");
             _spriteBatch.End();
 
             base.Draw(gameTime);
