@@ -16,10 +16,12 @@ namespace Pong.Game
 
         private bool gameStarted = false;
         private bool showStartMessage = true;
+        private bool gameEnded = false;
 
         private int padXOffset = 10;
         private float padScale = 0.5f;
         private float padSpeed = 7.5f;
+        private ScreenSide winningPlayer = ScreenSide.Center;
 
         private float gamepadDeadzone = 0.1f;
         private float gamepadSensitivity = 1.1f;
@@ -77,17 +79,37 @@ namespace Pong.Game
                     gameStarted = false;
                     leftStopped = false;
                     rightStopped = false;
-                    GenerateBall();
+
+                    CheckWin();
+                    if (!gameEnded)
+                        GenerateBall();
                     break;
                 case ScreenSide.Right:
                     rightScore++;
                     gameStarted = false;
                     leftStopped = false;
                     rightStopped = false;
-                    GenerateBall();
+
+                    CheckWin();
+                    if (!gameEnded)
+                        GenerateBall();
                     break;
                 default:
                     return;
+            }
+        }
+
+        protected void CheckWin()
+        {
+            if (leftScore >= 10)
+            {
+                gameEnded = true;
+                winningPlayer = ScreenSide.Left;
+            }
+            else if (rightScore  >= 10)
+            {
+                gameEnded = true;
+                winningPlayer = ScreenSide.Right;
             }
         }
 
@@ -283,11 +305,19 @@ namespace Pong.Game
             ball.Draw();
             leftPad.Draw();
             rightPad.Draw();
-            WriteStatusText(showStartMessage ?
-                "Left: W-S/Gamepad 1 stick/Gamepad 1 Dpad Up-Down\n"
-                    + "Right: Up-Down Arrow/Gamepad 2 stick/Gamepad 2 Dpad Up-Down\n"
-                    + "Move to start"
-                : $"{leftScore} - {rightScore}");
+
+            if (!gameEnded)
+                WriteStatusText(showStartMessage ?
+                    "Left: W-S/Gamepad 1 stick/Gamepad 1 Dpad Up-Down\n"
+                        + "Right: Up-Down Arrow/Gamepad 2 stick/Gamepad 2 Dpad Up-Down\n"
+                        + "Move to start"
+                    : $"{leftScore} - {rightScore}");
+            else
+                WriteStatusText((winningPlayer == ScreenSide.Left ?
+                    "Left player won!"
+                    : "Right player won!")
+                        + "\nPress Esc (or Menu button on gamepad) to quit.");
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
