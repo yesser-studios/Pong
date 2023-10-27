@@ -6,7 +6,7 @@ namespace Pong.Game
 {
     public class Ball : GameObject
     {
-        const float PAD_SPEED_UP = 2f;
+        const float BOUNCE_SPEED_UP = 1f;
 
         GameObject leftPad;
         GameObject rightPad;
@@ -49,15 +49,15 @@ namespace Pong.Game
 
             if (side == ScreenSide.Bottom
                 || side == ScreenSide.Top)
-                newVelocity.Y = -newVelocity.Y;
+                newVelocity.Y = -(newVelocity.Y + BOUNCE_SPEED_UP);
 
             if (CollidesWith(leftPad))
                 newVelocity.X = MathF.Abs(newVelocity.X)
-                    + PAD_SPEED_UP;
+                    + BOUNCE_SPEED_UP;
             
             if (CollidesWith(rightPad))
                 newVelocity.X = -MathF.Abs(newVelocity.X)
-                    - PAD_SPEED_UP;
+                    - BOUNCE_SPEED_UP;
 
             Velocity = newVelocity;
         }
