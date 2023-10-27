@@ -75,11 +75,15 @@ namespace Pong.Game
                 case ScreenSide.Left:
                     leftScore++;
                     gameStarted = false;
+                    leftStopped = false;
+                    rightStopped = false;
                     GenerateBall();
                     break;
                 case ScreenSide.Right:
-                    gameStarted = false;
                     rightScore++;
+                    gameStarted = false;
+                    leftStopped = false;
+                    rightStopped = false;
                     GenerateBall();
                     break;
                 default:
