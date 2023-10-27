@@ -75,7 +75,7 @@ namespace Pong.Game
             switch (side)
             {
                 case ScreenSide.Left:
-                    leftScore++;
+                    rightScore++;
                     gameStarted = false;
                     leftStopped = false;
                     rightStopped = false;
@@ -85,7 +85,7 @@ namespace Pong.Game
                         GenerateBall();
                     break;
                 case ScreenSide.Right:
-                    rightScore++;
+                    leftScore++;
                     gameStarted = false;
                     leftStopped = false;
                     rightStopped = false;
