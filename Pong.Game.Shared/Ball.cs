@@ -47,15 +47,17 @@ namespace Pong.Game
 
             Vector2 newVelocity = Velocity;
 
-            if (side == ScreenSide.Bottom
-                || side == ScreenSide.Top)
-                newVelocity.Y = -(newVelocity.Y + BOUNCE_SPEED_UP);
+            if (side == ScreenSide.Bottom)
+                newVelocity.Y = -MathF.Abs(newVelocity.Y)
+                    - BOUNCE_SPEED_UP;
+            else if (side == ScreenSide.Top)
+                newVelocity.Y = MathF.Abs(newVelocity.Y)
+                    + BOUNCE_SPEED_UP;
 
             if (CollidesWith(leftPad))
                 newVelocity.X = MathF.Abs(newVelocity.X)
                     + BOUNCE_SPEED_UP;
-            
-            if (CollidesWith(rightPad))
+            else if (CollidesWith(rightPad))
                 newVelocity.X = -MathF.Abs(newVelocity.X)
                     - BOUNCE_SPEED_UP;
 
