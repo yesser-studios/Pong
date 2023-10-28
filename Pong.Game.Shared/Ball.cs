@@ -51,21 +51,29 @@ namespace Pong.Game
 
             if (side == ScreenSide.Bottom)
                 newVelocity.Y = -MathF.Abs(newVelocity.Y)
-                    - (BOUNCE_SPEED_UP);
+                    - (lastTouched != ScreenSide.Bottom ?
+                        BOUNCE_SPEED_UP
+                        : 0);
             else if (side == ScreenSide.Top)
                 newVelocity.Y = MathF.Abs(newVelocity.Y)
-                    + BOUNCE_SPEED_UP;
+                    + (lastTouched != ScreenSide.Top ?
+                        BOUNCE_SPEED_UP
+                        : 0);
 
             if (CollidesWith(leftPad))
             {
                 newVelocity.X = MathF.Abs(newVelocity.X)
-                    + BOUNCE_SPEED_UP;
+                    + (lastTouched != ScreenSide.Left ?
+                        BOUNCE_SPEED_UP
+                        : 0);
                 side = ScreenSide.Left;
             }
             else if (CollidesWith(rightPad))
             {
                 newVelocity.X = -MathF.Abs(newVelocity.X)
-                    - BOUNCE_SPEED_UP;
+                    - (lastTouched != ScreenSide.Right ?
+                        BOUNCE_SPEED_UP
+                        : 0);
                 side = ScreenSide.Right;
             }
 
