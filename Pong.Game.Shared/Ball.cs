@@ -11,6 +11,8 @@ namespace Pong.Game
         GameObject leftPad;
         GameObject rightPad;
 
+        ScreenSide lastTouched = ScreenSide.Center;
+
         public Ball(
             Texture2D texture,
             Vector2 position,
@@ -49,17 +51,26 @@ namespace Pong.Game
 
             if (side == ScreenSide.Bottom)
                 newVelocity.Y = -MathF.Abs(newVelocity.Y)
-                    - BOUNCE_SPEED_UP;
+                    - (BOUNCE_SPEED_UP);
             else if (side == ScreenSide.Top)
                 newVelocity.Y = MathF.Abs(newVelocity.Y)
                     + BOUNCE_SPEED_UP;
 
             if (CollidesWith(leftPad))
+            {
                 newVelocity.X = MathF.Abs(newVelocity.X)
                     + BOUNCE_SPEED_UP;
+                side = ScreenSide.Left;
+            }
             else if (CollidesWith(rightPad))
+            {
                 newVelocity.X = -MathF.Abs(newVelocity.X)
                     - BOUNCE_SPEED_UP;
+                side = ScreenSide.Right;
+            }
+
+            if (side != ScreenSide.Center)
+                lastTouched = side;
 
             Velocity = newVelocity;
         }
