@@ -291,7 +291,7 @@ namespace Pong.Game
         {
             Vector2 textMiddlePoint = _font.MeasureString(text) / 2;
             // Places text in center of the screen
-            Vector2 position = new Vector2(gameResolution.X / 2, gameResolution.Y / 10);
+            Vector2 position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 10);
             _spriteBatch.DrawString(_font, text, position, Color.White, 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
         }
 
@@ -306,6 +306,18 @@ namespace Pong.Game
             leftPad.Draw();
             rightPad.Draw();
 
+            _spriteBatch.End();
+
+            base.Draw(gameTime);
+
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(new Color(30, 30, 30));
+
+            _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
+
+            _spriteBatch.Draw(_renderTarget, _renderTargetDest, Color.White);
+
+            #region Text
             if (!gameEnded)
                 WriteStatusText(showStartMessage ?
                     "Left: W-S/Gamepad 1 stick/Gamepad 1 Dpad Up-Down\n"
@@ -317,16 +329,8 @@ namespace Pong.Game
                     "Left player won!"
                     : "Right player won!")
                         + "\nPress Esc (or Menu button on gamepad) to quit.");
+            #endregion
 
-            _spriteBatch.End();
-
-            base.Draw(gameTime);
-
-            GraphicsDevice.SetRenderTarget(null);
-            GraphicsDevice.Clear(new Color(30, 30, 30));
-
-            _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
-            _spriteBatch.Draw(_renderTarget, _renderTargetDest, Color.White);
             _spriteBatch.End();
         }
 
