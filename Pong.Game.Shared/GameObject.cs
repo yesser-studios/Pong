@@ -3,15 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Pong.Game
 {
-    public enum ScreenSide
-    {
-        Top,
-        Bottom,
-        Left,
-        Right,
-        Center
-    }
-
     public class GameObject
     {
         protected readonly float screenWidth;
