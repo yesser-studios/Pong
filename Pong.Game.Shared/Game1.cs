@@ -53,6 +53,17 @@ namespace Pong.Game
             IsMouseVisible = false;
         }
 
+        protected void Restart()
+        {
+            gameStarted = false;
+            gameEnded = false;
+            showStartMessage = true;
+            winningPlayer = ScreenSide.Center;
+            leftScore = 0;
+            rightScore = 0;
+            GenerateBall();
+        }
+
         protected override void Initialize()
         {
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
