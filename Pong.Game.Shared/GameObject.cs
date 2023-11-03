@@ -5,6 +5,7 @@ namespace Pong.Game
 {
     public class GameObject
     {
+        #region Variables
         protected readonly float screenWidth;
         protected readonly float screenHeight;
         protected readonly SpriteBatch spriteBatch;
@@ -18,6 +19,7 @@ namespace Pong.Game
         public float Height { get => Texture.Height * Scale; }
         public float X { get => Position.X; }
         public float Y { get => Position.Y; }
+        #endregion
 
         public GameObject(
             Texture2D texture,
@@ -47,6 +49,7 @@ namespace Pong.Game
                 SpriteEffects.None,
                 0);
 
+        #region Movement
         public void Move(float x, float y)
         {
             x += X;
@@ -91,7 +94,9 @@ namespace Pong.Game
 
             Position = new Vector2(x, y);
         }
+        #endregion
 
+        #region Checks
         public ScreenSide CheckOOS()
         {
             ScreenSide outOfScreen = ScreenSide.Center;
@@ -112,5 +117,6 @@ namespace Pong.Game
                 && (Y + Height / 2 >= other.Y - other.Height / 2)
                 && (other.Y + other.Height / 2 >= Y - Height / 2);
         }
+        #endregion
     }
 }
