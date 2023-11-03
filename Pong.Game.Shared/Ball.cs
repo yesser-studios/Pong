@@ -38,6 +38,7 @@ namespace Pong.Game
             this.rightPad = rightPad;
         }
 
+        #region Movement
         public override void MoveByVelocity()
         {
             base.MoveByVelocity();
@@ -84,7 +85,8 @@ namespace Pong.Game
 
             Velocity = newVelocity;
         }
-        
+        #endregion
+
         /// <summary>
         /// Checks whether the ball surpassed the left or right edge of the screen.
         /// </summary>
