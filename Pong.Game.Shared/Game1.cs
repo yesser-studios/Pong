@@ -190,9 +190,13 @@ namespace Pong.Game
             bool leftUsedDPad = false;
             bool rightUsedDPad = false;
 
-            if (plr1GamepadState.Buttons.Start == ButtonState.Pressed
-                || keyboard.IsKeyDown(Keys.Escape))
+            if (keyboard.IsKeyDown(Keys.Escape))
                 Exit();
+
+            if (keyboard.IsKeyDown(Keys.R)
+                || plr1GamepadState.IsButtonDown(Buttons.Start)
+                || plr2GamepadState.IsButtonDown(Buttons.Start))
+                Restart();
 
             #region Keyboard controls
             if (keyboard.IsKeyDown(Keys.W))
