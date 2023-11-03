@@ -6,12 +6,14 @@ namespace Pong.Game
 {
     public class Ball : GameObject
     {
+        #region Variables
         const float BOUNCE_SPEED_UP = 1f;
 
         GameObject leftPad;
         GameObject rightPad;
 
         ScreenSide lastTouched = ScreenSide.Center;
+        #endregion
 
         public Ball(
             Texture2D texture,
