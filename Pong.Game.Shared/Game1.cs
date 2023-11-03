@@ -350,7 +350,8 @@ namespace Pong.Game
                 WriteStatusText((winningPlayer == ScreenSide.Left ?
                     "Left player won!"
                     : "Right player won!")
-                        + "\nPress Esc (or Menu button on gamepad) to quit.");
+                        + "\nPress Esc to quit."
+                        + "\nPress R or Menu button on gamepad to restart.");
             #endregion
 
             _spriteBatch.End();
