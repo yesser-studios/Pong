@@ -7,6 +7,7 @@ namespace Pong.Game
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        #region Variables
         private const float BALL_SPEED = 5f;
 
         private Random rnd = new Random();
@@ -46,22 +47,14 @@ namespace Pong.Game
         private bool leftStopped,
             rightStopped = false;
 
+        #endregion
+
+        #region Initialization
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = false;
-        }
-
-        protected void Restart()
-        {
-            gameStarted = false;
-            gameEnded = false;
-            showStartMessage = true;
-            winningPlayer = ScreenSide.Center;
-            leftScore = 0;
-            rightScore = 0;
-            GenerateBall();
         }
 
         protected override void Initialize()
@@ -74,53 +67,15 @@ namespace Pong.Game
             base.Initialize();
         }
 
-        protected float GenerateRandomBallYVelocity()
+        protected void Restart()
         {
-            float output = rnd.Next(1, 9) * 0.1f;
-            return output * (rnd.Next(0, 2) == 1 ? -1 : 1);
-        }
-
-        protected void Scored(ScreenSide side)
-        {
-            switch (side)
-            {
-                case ScreenSide.Left:
-                    rightScore++;
-                    gameStarted = false;
-                    leftStopped = false;
-                    rightStopped = false;
-
-                    CheckWin();
-                    if (!gameEnded)
-                        GenerateBall();
-                    break;
-                case ScreenSide.Right:
-                    leftScore++;
-                    gameStarted = false;
-                    leftStopped = false;
-                    rightStopped = false;
-
-                    CheckWin();
-                    if (!gameEnded)
-                        GenerateBall();
-                    break;
-                default:
-                    return;
-            }
-        }
-
-        protected void CheckWin()
-        {
-            if (leftScore >= 10)
-            {
-                gameEnded = true;
-                winningPlayer = ScreenSide.Left;
-            }
-            else if (rightScore  >= 10)
-            {
-                gameEnded = true;
-                winningPlayer = ScreenSide.Right;
-            }
+            gameStarted = false;
+            gameEnded = false;
+            showStartMessage = true;
+            winningPlayer = ScreenSide.Center;
+            leftScore = 0;
+            rightScore = 0;
+            GenerateBall();
         }
 
         private void GenerateBall()
@@ -177,6 +132,59 @@ namespace Pong.Game
                 _graphics.PreferredBackBufferHeight);
         }
 
+        protected float GenerateRandomBallYVelocity()
+        {
+            float output = rnd.Next(1, 9) * 0.1f;
+            return output * (rnd.Next(0, 2) == 1 ? -1 : 1);
+        }
+
+        #endregion
+
+        #region Scoring
+        protected void Scored(ScreenSide side)
+        {
+            switch (side)
+            {
+                case ScreenSide.Left:
+                    rightScore++;
+                    gameStarted = false;
+                    leftStopped = false;
+                    rightStopped = false;
+
+                    CheckWin();
+                    if (!gameEnded)
+                        GenerateBall();
+                    break;
+                case ScreenSide.Right:
+                    leftScore++;
+                    gameStarted = false;
+                    leftStopped = false;
+                    rightStopped = false;
+
+                    CheckWin();
+                    if (!gameEnded)
+                        GenerateBall();
+                    break;
+                default:
+                    return;
+            }
+        }
+        protected void CheckWin()
+        {
+            if (leftScore >= 10)
+            {
+                gameEnded = true;
+                winningPlayer = ScreenSide.Left;
+            }
+            else if (rightScore  >= 10)
+            {
+                gameEnded = true;
+                winningPlayer = ScreenSide.Right;
+            }
+        }
+        #endregion
+
+        #region Update and Drawing
         protected override void Update(GameTime gameTime)
         {
             KeyboardState keyboard = Keyboard.GetState();
@@ -378,5 +386,7 @@ namespace Pong.Game
             innerRectangle.Offset(delta);
             return innerRectangle;
         }
+
+        #endregion
     }
 }
