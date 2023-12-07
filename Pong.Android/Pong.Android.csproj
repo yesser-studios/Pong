@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-android34.0</TargetFramework>
+    <OutputType>Exe</OutputType>
+    <ApplicationId>com.companyname.Pong.Android</ApplicationId>
+    <ApplicationVersion>1</ApplicationVersion>
+    <ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
+    <SupportedOSPlatformVersion>24.0</SupportedOSPlatformVersion>
+    <AndroidSigningKeyStore>YesserStudiosXamarin.keystore</AndroidSigningKeyStore>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <AndroidLinkTool>r8</AndroidLinkTool>
+    <AndroidPackageFormat>apk</AndroidPackageFormat>
+    <AndroidKeyStore>False</AndroidKeyStore>
+    <AndroidSigningStorePass></AndroidSigningStorePass>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <AndroidKeyStore>False</AndroidKeyStore>
+    <AndroidSigningStorePass></AndroidSigningStorePass>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
+    <PackageReference Include="MonoGame.Framework.Android" Version="3.8.1.303" />
+  </ItemGroup>
+  <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
+    <Message Text="Restoring dotnet tools" Importance="High" />
+    <Exec Command="dotnet tool restore" />
+  </Target>
+  <Import Project="..\Pong.Game.Shared\Pong.Game.Shared.projitems" Label="Shared" />
+</Project>

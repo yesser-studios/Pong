@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pong.UWP", "Pong.UWP\Pong.U
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Pong.Game.Shared", "Pong.Game.Shared\Pong.Game.Shared.shproj", "{A0CDBD0E-3A41-42B7-9425-A838BC2C7383}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pong.Android", "Pong.Android\Pong.Android.csproj", "{C08BD045-E1E3-4D16-8079-998FA944434B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,22 @@ Global
 		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|x86.ActiveCfg = Release|x86
 		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|x86.Build.0 = Release|x86
 		{45A0694F-73DE-4E25-86E2-3070B6AAAFDB}.Release|x86.Deploy.0 = Release|x86
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Debug|ARM.Build.0 = Debug|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Debug|x64.Build.0 = Debug|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Debug|x86.Build.0 = Debug|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Release|ARM.ActiveCfg = Release|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Release|ARM.Build.0 = Release|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Release|x64.ActiveCfg = Release|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Release|x64.Build.0 = Release|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Release|x86.ActiveCfg = Release|Any CPU
+		{C08BD045-E1E3-4D16-8079-998FA944434B}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -72,5 +90,6 @@ Global
 		Pong.Game.Shared\Pong.Game.Shared.projitems*{45a0694f-73de-4e25-86e2-3070b6aaafdb}*SharedItemsImports = 4
 		Pong.Game.Shared\Pong.Game.Shared.projitems*{a0cdbd0e-3a41-42b7-9425-a838bc2c7383}*SharedItemsImports = 13
 		Pong.Game.Shared\Pong.Game.Shared.projitems*{b1f840b1-e539-461d-8b2b-2555bcfe4ba9}*SharedItemsImports = 5
+		Pong.Game.Shared\Pong.Game.Shared.projitems*{c08bd045-e1e3-4d16-8079-998fa944434b}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal
