@@ -26,6 +26,7 @@ namespace Pong.UWP
             // Create the game.
             var launchArguments = string.Empty;
             _game = MonoGame.Framework.XamlGame<Game.Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
+            Window.Current.CoreWindow.PointerCursor = null;
         }
     }
 }
