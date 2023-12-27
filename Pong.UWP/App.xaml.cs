@@ -29,6 +29,10 @@ namespace Pong.UWP
         public App()
         {
             this.InitializeComponent();
+
+            // Disable Xbox pointer mode (https://learn.microsoft.com/en-us/windows/uwp/xbox-apps/how-to-disable-mouse-mode)
+            this.RequiresPointerMode = ApplicationRequiresPointerMode.WhenRequested;
+
             this.Suspending += OnSuspending;
         }
 
