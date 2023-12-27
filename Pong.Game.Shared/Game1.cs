@@ -64,13 +64,6 @@ namespace Pong.Game
             _graphics.IsFullScreen = true;
             _graphics.ApplyChanges();
 
-            Viewport viewport = new Viewport(
-                0, 0,
-                GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width,
-                GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height
-            );
-            GraphicsDevice.Viewport = viewport; 
-
             base.Initialize();
         }
 
