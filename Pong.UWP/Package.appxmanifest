@@ -8,10 +8,10 @@
 
   <Identity
     Name="25078YesserStudios.PongbyYesserStudios"
-    Publisher="CN=Yesser Studios UWP"
-    Version="1.0.2.0" />
+    Publisher="CN=197534C1-4006-44A2-BFCD-CA87D3F8D948"
+    Version="1.0.3.0" />
 
-  <mp:PhoneIdentity PhoneProductId="7c6b38be-c197-488e-8d60-403f869e17f1" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="46a04ba4-84e4-4e8f-a19d-1685de9dc787" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Pong by Yesser Studios</DisplayName>
