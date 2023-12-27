@@ -23,6 +23,9 @@ namespace Pong.UWP
         {
             this.InitializeComponent();
 
+            // Disable Xbox overscan (https://learn.microsoft.com/en-us/windows/uwp/xbox-apps/turn-off-overscan)
+            Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().SetDesiredBoundsMode(Windows.UI.ViewManagement.ApplicationViewBoundsMode.UseCoreWindow);
+
             // Create the game.
             var launchArguments = string.Empty;
             _game = MonoGame.Framework.XamlGame<Game.Game1>.Create(launchArguments, Window.Current.CoreWindow, swapChainPanel);
