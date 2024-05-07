@@ -5,5 +5,61 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
+    
+    <ItemGroup Condition="'$(Platform)' == 'x64'">
+        <Content Include="DiscordGameSDK\lib\x86_64\discord_game_sdk.bundle">
+            <Link>%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="DiscordGameSDK\lib\x86_64\discord_game_sdk.dll">
+            <Link>%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="DiscordGameSDK\lib\x86_64\discord_game_sdk.dylib">
+            <Link>%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="DiscordGameSDK\lib\x86_64\discord_game_sdk.so">
+            <Link>%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="DiscordGameSDK\lib\x86_64\discord_game_sdk.dll.lib">
+            <Link>%(Filename)%(Extension)</Link>
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 
+    <!--<ItemGroup Condition="'$(Platform)' == 'x64'">
+      <Content Include="DiscordGameSDK\lib\x86_64\discord_game_sdk.bundle">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="DiscordGameSDK\lib\x86_64\discord_game_sdk.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="DiscordGameSDK\lib\x86_64\discord_game_sdk.dylib">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="DiscordGameSDK\lib\x86_64\discord_game_sdk.so">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="DiscordGameSDK\lib\x86_64\discord_game_sdk.dll.lib">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)' == 'x86'">
+        <Content Include="DiscordGameSDK\lib\x86\discord_game_sdk.dll">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="DiscordGameSDK\lib\x86\discord_game_sdk.dll.lib">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+    <ItemGroup Condition="'$(Platform)' == 'Arm64'">
+        <Content Include="DiscordGameSDK\lib\aarch64\discord_game_sdk.dylib">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+        <Content Include="DiscordGameSDK\lib\aarch64\discord_game_sdk.bundle">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>-->
 </Project>
