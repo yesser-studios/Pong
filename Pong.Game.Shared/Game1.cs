@@ -11,6 +11,7 @@ namespace Pong.Game
         private const float BALL_SPEED = 5f;
 
         private Random rnd = new Random();
+        private readonly PlatformSpecific _platformSpecific = new PlatformSpecific();
 
         private Point gameResolution = new Point(960, 720);
 
@@ -307,6 +308,7 @@ namespace Pong.Game
             }
             
             base.Update(gameTime);
+            _platformSpecific.UpdateFinished();
         }
 
         private void WriteStatusText(string text)
