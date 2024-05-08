@@ -11,12 +11,13 @@ namespace Pong.Game
         private const float BALL_SPEED = 5f;
 
         private Random rnd = new Random();
-        private readonly PlatformSpecific _platformSpecific = new PlatformSpecific();
+        private readonly PlatformSpecific _platformSpecific;
 
         private Point gameResolution = new Point(960, 720);
 
         private bool gameStarted = false;
         private bool showStartMessage = true;
+        private bool roundStarted = false;
         private bool gameEnded = false;
 
         private int padXOffset = 10;
@@ -51,6 +52,15 @@ namespace Pong.Game
         #endregion
 
         #region Initialization
+        public Game1(PlatformSpecific platformSpecific)
+        {
+            _graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+            IsMouseVisible = false;
+
+            _platformSpecific = platformSpecific;
+        }
+        
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -70,7 +80,7 @@ namespace Pong.Game
 
         protected void Restart()
         {
-            gameStarted = false;
+            roundStarted = false;
             gameEnded = false;
             showStartMessage = true;
             winningPlayer = ScreenSide.Center;
@@ -148,7 +158,7 @@ namespace Pong.Game
             {
                 case ScreenSide.Left:
                     rightScore++;
-                    gameStarted = false;
+                    roundStarted = false;
                     leftStopped = false;
                     rightStopped = false;
 
@@ -158,7 +168,7 @@ namespace Pong.Game
                     break;
                 case ScreenSide.Right:
                     leftScore++;
-                    gameStarted = false;
+                    roundStarted = false;
                     leftStopped = false;
                     rightStopped = false;
 
@@ -287,8 +297,9 @@ namespace Pong.Game
 
             if ((leftMoved && leftStopped) || (rightMoved && rightStopped))
             {
-                gameStarted = true;
+                roundStarted = true;
                 showStartMessage = false;
+                gameStarted = true;
             }
 
             if (!leftMoved)
@@ -297,10 +308,10 @@ namespace Pong.Game
             if (!rightMoved)
                 rightStopped = true;
 
-            if (gameStarted)
+            if (roundStarted)
                 ball.MoveByVelocity();
 
-            if (gameStarted)
+            if (roundStarted)
             {
                 ScreenSide scored = ball.CheckScored();
                 if (scored != ScreenSide.Center)
@@ -308,7 +319,8 @@ namespace Pong.Game
             }
             
             base.Update(gameTime);
-            _platformSpecific.UpdateFinished(leftScore, rightScore);
+            
+            _platformSpecific?.UpdateFinished(leftScore, rightScore, gameStarted);
         }
 
         private void WriteStatusText(string text)
