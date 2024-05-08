@@ -8,48 +8,59 @@ namespace Pong.Game
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         #region Variables
-        private const float BALL_SPEED = 5f;
+        private const float BallSpeed = 5f;
 
-        private Random rnd = new Random();
+        private readonly Random _rnd = new Random();
+        private readonly PlatformSpecific _platformSpecific;
 
-        private Point gameResolution = new Point(960, 720);
+        private readonly Point _gameResolution = new Point(960, 720);
 
-        private bool gameStarted = false;
-        private bool showStartMessage = true;
-        private bool gameEnded = false;
+        private bool _gameStarted = false;
+        private bool _showStartMessage = true;
+        private bool _roundStarted = false;
+        private bool _gameEnded = false;
 
-        private int padXOffset = 10;
-        private float padScale = 0.5f;
-        private float padSpeed = 7.5f;
-        private ScreenSide winningPlayer = ScreenSide.Center;
+        private const int PadXOffset = 10;
+        private const float PadScale = 0.5f;
+        private const float PadSpeed = 7.5f;
+        private ScreenSide _winningPlayer = ScreenSide.Center;
 
-        private float gamepadDeadzone = 0.1f;
-        private float gamepadSensitivity = 1.1f;
+        private const float GamepadDeadzone = 0.1f;
+        private const float GamepadSensitivity = 1.1f;
 
         private RenderTarget2D _renderTarget;
         private Rectangle _renderTargetDest;
-        private GraphicsDeviceManager _graphics;
+        private readonly GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont _font;
 
-        private Ball ball;
-        private GameObject leftPad;
-        private GameObject rightPad;
+        private Ball _ball;
+        private GameObject _leftPad;
+        private GameObject _rightPad;
 
-        private Texture2D ballTex;
+        private Texture2D _ballTex;
 
-        private int leftScore,
-            rightScore = 0;
+        private int _leftScore,
+            _rightScore = 0;
 
         /// <summary>
         /// Whether left/right stopped after landing a goal.
         /// </summary>
-        private bool leftStopped,
-            rightStopped = false;
+        private bool _leftStopped,
+            _rightStopped = false;
 
         #endregion
 
         #region Initialization
+        public Game1(PlatformSpecific platformSpecific)
+        {
+            _graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
+            IsMouseVisible = false;
+
+            _platformSpecific = platformSpecific;
+        }
+        
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -69,53 +80,53 @@ namespace Pong.Game
 
         protected void Restart()
         {
-            gameStarted = false;
-            gameEnded = false;
-            showStartMessage = true;
-            winningPlayer = ScreenSide.Center;
-            leftScore = 0;
-            rightScore = 0;
+            _roundStarted = false;
+            _gameEnded = false;
+            _showStartMessage = true;
+            _winningPlayer = ScreenSide.Center;
+            _leftScore = 0;
+            _rightScore = 0;
             GenerateBall();
         }
 
         private void GenerateBall()
         {
             // Generates a random Y velocity.
-            Vector2 ballVelocity = new Vector2(rnd.Next(0, 2) == 1 ? -1 : 1, GenerateRandomBallYVelocity());
+            Vector2 ballVelocity = new Vector2(_rnd.Next(0, 2) == 1 ? -1 : 1, GenerateRandomBallYVelocity());
 
-            ball = new Ball(
-                ballTex,
-                new Vector2(gameResolution.X / 2, gameResolution.Y / 2),
+            _ball = new Ball(
+                _ballTex,
+                new Vector2(_gameResolution.X / 2, _gameResolution.Y / 2),
                 1f,
                 _spriteBatch,
-                gameResolution.X,
-                gameResolution.Y,
-                ballVelocity * BALL_SPEED,
-                leftPad,
-                rightPad);
+                _gameResolution.X,
+                _gameResolution.Y,
+                ballVelocity * BallSpeed,
+                _leftPad,
+                _rightPad);
         }
 
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            leftPad = new GameObject(
+            _leftPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
-                new Vector2(padXOffset, gameResolution.Y / 2),
-                padScale,
+                new Vector2(PadXOffset, _gameResolution.Y / 2),
+                PadScale,
                 _spriteBatch,
-                gameResolution.X,
-                gameResolution.Y);
+                _gameResolution.X,
+                _gameResolution.Y);
 
-            rightPad = new GameObject(
+            _rightPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
-                new Vector2(gameResolution.X - padXOffset, gameResolution.Y / 2),
-                padScale,
+                new Vector2(_gameResolution.X - PadXOffset, _gameResolution.Y / 2),
+                PadScale,
                 _spriteBatch,
-                gameResolution.X,
-                gameResolution.Y);
+                _gameResolution.X,
+                _gameResolution.Y);
 
-            ballTex = Content.Load<Texture2D>("Ball");
+            _ballTex = Content.Load<Texture2D>("Ball");
 
             GenerateBall();
 
@@ -123,19 +134,19 @@ namespace Pong.Game
 
             _renderTarget = new RenderTarget2D(
                 GraphicsDevice,
-                gameResolution.X,
-                gameResolution.Y);
+                _gameResolution.X,
+                _gameResolution.Y);
 
             _renderTargetDest = GetRenderTargetDestination(
-                gameResolution,
+                _gameResolution,
                 _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight);
         }
 
         protected float GenerateRandomBallYVelocity()
         {
-            float output = rnd.Next(1, 9) * 0.1f;
-            return output * (rnd.Next(0, 2) == 1 ? -1 : 1);
+            float output = _rnd.Next(1, 9) * 0.1f;
+            return output * (_rnd.Next(0, 2) == 1 ? -1 : 1);
         }
 
         #endregion
@@ -146,23 +157,23 @@ namespace Pong.Game
             switch (side)
             {
                 case ScreenSide.Left:
-                    rightScore++;
-                    gameStarted = false;
-                    leftStopped = false;
-                    rightStopped = false;
+                    _rightScore++;
+                    _roundStarted = false;
+                    _leftStopped = false;
+                    _rightStopped = false;
 
                     CheckWin();
-                    if (!gameEnded)
+                    if (!_gameEnded)
                         GenerateBall();
                     break;
                 case ScreenSide.Right:
-                    leftScore++;
-                    gameStarted = false;
-                    leftStopped = false;
-                    rightStopped = false;
+                    _leftScore++;
+                    _roundStarted = false;
+                    _leftStopped = false;
+                    _rightStopped = false;
 
                     CheckWin();
-                    if (!gameEnded)
+                    if (!_gameEnded)
                         GenerateBall();
                     break;
                 default:
@@ -171,15 +182,15 @@ namespace Pong.Game
         }
         protected void CheckWin()
         {
-            if (leftScore >= 10)
+            if (_leftScore >= 10)
             {
-                gameEnded = true;
-                winningPlayer = ScreenSide.Left;
+                _gameEnded = true;
+                _winningPlayer = ScreenSide.Left;
             }
-            else if (rightScore  >= 10)
+            else if (_rightScore  >= 10)
             {
-                gameEnded = true;
-                winningPlayer = ScreenSide.Right;
+                _gameEnded = true;
+                _winningPlayer = ScreenSide.Right;
             }
         }
         #endregion
@@ -209,65 +220,65 @@ namespace Pong.Game
             #region Keyboard controls
             if (keyboard.IsKeyDown(Keys.W))
             {
-                leftPad.MoveNoOOS(0, -padSpeed);
+                _leftPad.MoveNoOOS(0, -PadSpeed);
                 leftUsedKeyboard = true;
             }
 
             if (keyboard.IsKeyDown(Keys.S))
             {
-                leftPad.MoveNoOOS(0, padSpeed);
+                _leftPad.MoveNoOOS(0, PadSpeed);
                 leftUsedKeyboard = true;
             }
 
             if (keyboard.IsKeyDown(Keys.Up))
             {
-                rightPad.MoveNoOOS(0, -padSpeed);
+                _rightPad.MoveNoOOS(0, -PadSpeed);
                 rightUsedKeyboard = true;
             }
 
 
             if (keyboard.IsKeyDown(Keys.Down))
             {
-                rightPad.MoveNoOOS(0, padSpeed);
+                _rightPad.MoveNoOOS(0, PadSpeed);
                 rightUsedKeyboard = true;
             }
 
             #endregion
 
             #region Gamepad controls
-            if ((plr1GamepadState.ThumbSticks.Left.Y > gamepadDeadzone || plr1GamepadState.ThumbSticks.Left.Y < -gamepadDeadzone) && !leftUsedKeyboard)
+            if ((plr1GamepadState.ThumbSticks.Left.Y > GamepadDeadzone || plr1GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone) && !leftUsedKeyboard)
             {
-                leftPad.MoveNoOOS(0, -plr1GamepadState.ThumbSticks.Left.Y * padSpeed * gamepadSensitivity);
+                _leftPad.MoveNoOOS(0, -plr1GamepadState.ThumbSticks.Left.Y * PadSpeed * GamepadSensitivity);
                 leftUsedStick = true;
             }
 
-            if ((plr2GamepadState.ThumbSticks.Left.Y > gamepadDeadzone || plr2GamepadState.ThumbSticks.Left.Y < -gamepadDeadzone) && !rightUsedKeyboard)
+            if ((plr2GamepadState.ThumbSticks.Left.Y > GamepadDeadzone || plr2GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone) && !rightUsedKeyboard)
             {
-                rightPad.MoveNoOOS(0, -plr2GamepadState.ThumbSticks.Left.Y * padSpeed * gamepadSensitivity);
+                _rightPad.MoveNoOOS(0, -plr2GamepadState.ThumbSticks.Left.Y * PadSpeed * GamepadSensitivity);
                 rightUsedStick = true;
             }
 
             if (plr1GamepadState.DPad.Up == ButtonState.Pressed && !leftUsedKeyboard && !leftUsedStick)
             {
-                leftPad.MoveNoOOS(0, -padSpeed);
+                _leftPad.MoveNoOOS(0, -PadSpeed);
                 leftUsedDPad = true;
             }
 
             if (plr1GamepadState.DPad.Down == ButtonState.Pressed && !leftUsedKeyboard && !leftUsedStick)
             {
-                leftPad.MoveNoOOS(0, padSpeed);
+                _leftPad.MoveNoOOS(0, PadSpeed);
                 leftUsedDPad = true;
             }
 
             if (plr2GamepadState.DPad.Up == ButtonState.Pressed && !rightUsedKeyboard && !rightUsedStick)
             {
-                rightPad.MoveNoOOS(0, -padSpeed);
+                _rightPad.MoveNoOOS(0, -PadSpeed);
                 rightUsedDPad = true;
             }
 
             if (plr2GamepadState.DPad.Down == ButtonState.Pressed && !rightUsedKeyboard && !rightUsedStick)
             {
-                rightPad.MoveNoOOS(0, padSpeed);
+                _rightPad.MoveNoOOS(0, PadSpeed);
                 rightUsedDPad = true;
             }
             #endregion
@@ -284,29 +295,32 @@ namespace Pong.Game
                 || rightUsedStick
                 || rightUsedDPad;
 
-            if ((leftMoved && leftStopped) || (rightMoved && rightStopped))
+            if ((leftMoved && _leftStopped) || (rightMoved && _rightStopped))
             {
-                gameStarted = true;
-                showStartMessage = false;
+                _roundStarted = true;
+                _showStartMessage = false;
+                _gameStarted = true;
             }
 
             if (!leftMoved)
-                leftStopped = true;
+                _leftStopped = true;
 
             if (!rightMoved)
-                rightStopped = true;
+                _rightStopped = true;
 
-            if (gameStarted)
-                ball.MoveByVelocity();
+            if (_roundStarted)
+                _ball.MoveByVelocity();
 
-            if (gameStarted)
+            if (_roundStarted)
             {
-                ScreenSide scored = ball.CheckScored();
+                ScreenSide scored = _ball.CheckScored();
                 if (scored != ScreenSide.Center)
                     Scored(scored);
             }
             
             base.Update(gameTime);
+            
+            _platformSpecific?.UpdateFinished(_leftScore, _rightScore, _gameStarted);
         }
 
         private void WriteStatusText(string text)
@@ -324,9 +338,9 @@ namespace Pong.Game
             GraphicsDevice.Clear(Color.Black);
 
             _spriteBatch.Begin(samplerState: SamplerState.PointWrap);
-            ball.Draw();
-            leftPad.Draw();
-            rightPad.Draw();
+            _ball.Draw();
+            _leftPad.Draw();
+            _rightPad.Draw();
 
             _spriteBatch.End();
 
@@ -340,14 +354,14 @@ namespace Pong.Game
             _spriteBatch.Draw(_renderTarget, _renderTargetDest, Color.White);
 
             #region Text
-            if (!gameEnded)
-                WriteStatusText(showStartMessage ?
+            if (!_gameEnded)
+                WriteStatusText(_showStartMessage ?
                     "Left: W-S/Gamepad 1 stick/Gamepad 1 Dpad Up-Down\n"
                         + "Right: Up-Down Arrow/Gamepad 2 stick/Gamepad 2 Dpad Up-Down\n"
                         + "Move to start"
-                    : $"{leftScore} - {rightScore}");
+                    : $"{_leftScore} - {_rightScore}");
             else
-                WriteStatusText((winningPlayer == ScreenSide.Left ?
+                WriteStatusText((_winningPlayer == ScreenSide.Left ?
                     "Left player won!"
                     : "Right player won!")
                         + "\nPress Esc to quit. (on PC only)"
