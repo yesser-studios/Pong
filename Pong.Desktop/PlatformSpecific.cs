@@ -33,6 +33,9 @@ public class PlatformSpecific
 
     private void UpdateRpc(int scoreLeft, int scoreRight, bool gameStarted)
     {
+        if (Client.IsDisposed)
+            return;
+        
         if (!Client.IsInitialized)
             return;
 
@@ -55,12 +58,10 @@ public class PlatformSpecific
     public void UpdateFinished(int scoreLeft, int scoreRight, bool gameStarted)
     {
         UpdateRpc(scoreLeft, scoreRight, gameStarted);
-        Console.WriteLine($"Updated: {scoreLeft} : {scoreRight}; {gameStarted}");
     }
 
     public void Closing()
     {
         Client.Dispose();
-        Console.WriteLine("Closing");
     }
 }
