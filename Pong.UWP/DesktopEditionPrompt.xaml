@@ -1,0 +1,36 @@
+﻿<ContentDialog
+    x:Class="Pong.UWP.DesktopEditionPrompt"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Pong.UWP"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="New Windows edition available"
+    PrimaryButtonText="Got it"
+    SecondaryButtonText="Got it, don't show again"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <StackPanel Orientation="Vertical">
+        <TextBlock>
+            A new edition of Pong by Yesser Studios for Windows has been released.<LineBreak />
+            This edition contains features that are not available in this edition.<LineBreak />
+            This edition will still be updated for the purpose of Xbox availability.<LineBreak />
+            To update:
+        </TextBlock>
+        <ListView>
+            <ListViewItem>1. Open the store page of the new edition by clicking the link below.</ListViewItem>
+            <ListViewItem>
+                <TextBlock>
+                    2. Uninstall this edition of Pong<LineBreak />
+                    (find it in Start menu or search, right-click and press uninstall)
+                </TextBlock>
+            </ListViewItem>
+            <ListViewItem>
+                3. Install the new edition from the store page.
+            </ListViewItem>
+        </ListView>
+        <HyperlinkButton NavigateUri="ms-windows-store://pdp/?productid=9NTS97B4PCT6">Open store page</HyperlinkButton>
+    </StackPanel>
+</ContentDialog>
