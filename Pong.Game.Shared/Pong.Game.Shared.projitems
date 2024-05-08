@@ -41,4 +41,7 @@
     <None Include="$(MSBuildThisFileDirectory)Content\obj\WindowsStoreApp\Content\Pad.mgcontent" />
     <None Include="$(MSBuildThisFileDirectory)Content\Pad.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="$(MSBuildThisFileDirectory)Content\CascadiaMono.ttf" />
+  </ItemGroup>
 </Project>
