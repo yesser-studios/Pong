@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.System.Profile;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -20,6 +21,7 @@ namespace Pong.UWP
     public sealed partial class GamePage : Page
     {
         Game.Game1 _game;
+        readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
 
         public GamePage()
         {
@@ -31,10 +33,12 @@ namespace Pong.UWP
 
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            bool showEditionPrompt = _localSettings.Values["showEditionPrompt"] as bool? ?? true;
+
             // Check if user is on Windows, then prompt install of Desktop edition
-            if (AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
+            if (showEditionPrompt && AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
             {
-                DesktopEditionPrompt prompt = new DesktopEditionPrompt();
+                DesktopEditionPrompt prompt = new DesktopEditionPrompt(_localSettings);
                 await prompt.ShowAsync();
             }
 
