@@ -308,7 +308,7 @@ namespace Pong.Game
             }
             
             base.Update(gameTime);
-            _platformSpecific.UpdateFinished();
+            _platformSpecific.UpdateFinished(leftScore, rightScore);
         }
 
         private void WriteStatusText(string text)
