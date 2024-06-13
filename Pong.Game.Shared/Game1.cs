@@ -77,6 +77,12 @@ namespace Pong.Game
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             _graphics.IsFullScreen = true;
+            
+#if DEBUG
+            // Make debug window borderless to allow breakpoints to redirect to IDE.
+            _graphics.HardwareModeSwitch = false;
+#endif
+            
             _graphics.ApplyChanges();
 
             base.Initialize();
