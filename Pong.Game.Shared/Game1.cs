@@ -239,26 +239,30 @@ namespace Pong.Game
             #endregion
             
             #region Keyboard controls
+            
+            // Left Up
             if (keyboard.IsKeyDown(Keys.W))
             {
                 _leftPad.MoveNoOOS(0, -PadSpeed);
                 leftUsedKeyboard = true;
             }
 
+            // Left Down
             if (keyboard.IsKeyDown(Keys.S))
             {
                 _leftPad.MoveNoOOS(0, PadSpeed);
                 leftUsedKeyboard = true;
             }
 
-            if (keyboard.IsKeyDown(Keys.Up))
+            // Right Up
+            if (keyboard.IsKeyDown(Keys.Up) && !_playWithBot)
             {
                 _rightPad.MoveNoOOS(0, -PadSpeed);
                 rightUsedKeyboard = true;
             }
 
-
-            if (keyboard.IsKeyDown(Keys.Down))
+            // Right Down
+            if (keyboard.IsKeyDown(Keys.Down) && !_playWithBot)
             {
                 _rightPad.MoveNoOOS(0, PadSpeed);
                 rightUsedKeyboard = true;
@@ -267,37 +271,54 @@ namespace Pong.Game
             #endregion
 
             #region Gamepad controls
-            if ((plr1GamepadState.ThumbSticks.Left.Y > GamepadDeadzone || plr1GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone) && !leftUsedKeyboard)
+            
+            // Left Thumbstick
+            if ((plr1GamepadState.ThumbSticks.Left.Y > GamepadDeadzone 
+                 || plr1GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone)
+                && !leftUsedKeyboard)
             {
                 _leftPad.MoveNoOOS(0, -plr1GamepadState.ThumbSticks.Left.Y * PadSpeed * GamepadSensitivity);
                 leftUsedStick = true;
             }
-
-            if ((plr2GamepadState.ThumbSticks.Left.Y > GamepadDeadzone || plr2GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone) && !rightUsedKeyboard)
+            
+            // Right Thumbstick
+            if ((plr2GamepadState.ThumbSticks.Left.Y > GamepadDeadzone 
+                 || plr2GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone) 
+                && !rightUsedKeyboard && !_playWithBot)
             {
                 _rightPad.MoveNoOOS(0, -plr2GamepadState.ThumbSticks.Left.Y * PadSpeed * GamepadSensitivity);
                 rightUsedStick = true;
             }
-
-            if (plr1GamepadState.DPad.Up == ButtonState.Pressed && !leftUsedKeyboard && !leftUsedStick)
+            
+            // Left DPad Up
+            if (plr1GamepadState.DPad.Up == ButtonState.Pressed
+                && !leftUsedKeyboard && !leftUsedStick)
             {
                 _leftPad.MoveNoOOS(0, -PadSpeed);
                 leftUsedDPad = true;
             }
 
-            if (plr1GamepadState.DPad.Down == ButtonState.Pressed && !leftUsedKeyboard && !leftUsedStick)
+            // Left DPad Down
+            if (plr1GamepadState.DPad.Down == ButtonState.Pressed
+                && !leftUsedKeyboard && !leftUsedStick)
             {
                 _leftPad.MoveNoOOS(0, PadSpeed);
                 leftUsedDPad = true;
             }
 
-            if (plr2GamepadState.DPad.Up == ButtonState.Pressed && !rightUsedKeyboard && !rightUsedStick)
+            // Right DPad Up
+            if (plr2GamepadState.DPad.Up == ButtonState.Pressed
+                && !rightUsedKeyboard && !rightUsedStick
+                && !_playWithBot)
             {
                 _rightPad.MoveNoOOS(0, -PadSpeed);
                 rightUsedDPad = true;
             }
 
-            if (plr2GamepadState.DPad.Down == ButtonState.Pressed && !rightUsedKeyboard && !rightUsedStick)
+            // Right DPad down
+            if (plr2GamepadState.DPad.Down == ButtonState.Pressed
+                && !rightUsedKeyboard && !rightUsedStick
+                && !_playWithBot)
             {
                 _rightPad.MoveNoOOS(0, PadSpeed);
                 rightUsedDPad = true;
