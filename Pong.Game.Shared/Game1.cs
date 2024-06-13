@@ -389,14 +389,15 @@ namespace Pong.Game
             #region Text
             if (!_gameEnded)
                 WriteStatusText(_showStartMessage ?
-                    "Left: W-S/Gamepad 1 stick/Gamepad 1 Dpad Up-Down\n"
-                        + "Right: Up-Down Arrow/Gamepad 2 stick/Gamepad 2 Dpad Up-Down\n"
-                        + "Move to start"
+                    "Left: W-S/Gamepad 1 stick/Gamepad 1 Dpad Up-Down"
+                        + "\n" + (_playWithBot ? "Right: Played by bot" : "Right: Up-Down Arrow/Gamepad 2 stick/Gamepad 2 Dpad Up-Down")
+                        + "\nMove to start"
+                        + "\nPress B/Gamepad Y button to play with " + (_playWithBot ? "another person" : "bot")
                     : $"{_leftScore} - {_rightScore}");
             else
                 WriteStatusText((_winningPlayer == ScreenSide.Left ?
-                    "Left player won!"
-                    : "Right player won!")
+                    _playWithBot ? "You won!" : "Left player won!"
+                    : _playWithBot ? "You lose..." : "Right player won!")
                         + "\nPress Esc to quit. (on PC only)"
                         + "\nPress R on keyboard or Menu button on gamepad to restart.");
             #endregion
