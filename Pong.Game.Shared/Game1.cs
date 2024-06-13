@@ -15,6 +15,10 @@ namespace Pong.Game
 
         private readonly Point _gameResolution = new Point(960, 720);
 
+        private bool _playWithBot = false;
+        private bool _botButtonDown = false;
+        private const float BotHeightCheckFactor = 0.75F;
+
         private bool _gameStarted = false;
         private bool _showStartMessage = true;
         private bool _roundStarted = false;
@@ -209,6 +213,8 @@ namespace Pong.Game
             bool leftUsedDPad = false;
             bool rightUsedDPad = false;
 
+            #region Exit, Restart and Bot controls
+
             if (keyboard.IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -217,6 +223,21 @@ namespace Pong.Game
                 || plr2GamepadState.IsButtonDown(Buttons.Start))
                 Restart();
 
+            if (!_botButtonDown && keyboard.IsKeyDown(Keys.B)
+                || plr1GamepadState.IsButtonDown(Buttons.Y)
+                || plr2GamepadState.IsButtonDown(Buttons.Y))
+            {
+                _playWithBot = !_playWithBot;
+                _botButtonDown = true;
+            }
+
+            if (keyboard.IsKeyUp(Keys.B)
+                && plr1GamepadState.IsButtonUp(Buttons.Y)
+                && plr2GamepadState.IsButtonUp(Buttons.Y))
+                _botButtonDown = false;
+            
+            #endregion
+            
             #region Keyboard controls
             if (keyboard.IsKeyDown(Keys.W))
             {
@@ -281,6 +302,18 @@ namespace Pong.Game
                 _rightPad.MoveNoOOS(0, PadSpeed);
                 rightUsedDPad = true;
             }
+            
+            #endregion
+
+            #region Bot Movement
+
+            if (_playWithBot && _roundStarted)
+            {
+                if (_ball.Y > _rightPad.Y + _rightPad.Height / 2F / BotHeightCheckFactor
+                    && _ball.Y < _rightPad.Y - _rightPad.Height / 2F / BotHeightCheckFactor)
+                    _rightPad.MoveNoOOS(0, _rightPad.Y < _ball.Y ? PadSpeed : -PadSpeed);
+            }
+
             #endregion
 
             bool moved = leftUsedKeyboard || rightUsedKeyboard
