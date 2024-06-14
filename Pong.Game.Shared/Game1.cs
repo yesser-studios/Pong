@@ -336,8 +336,8 @@ namespace Pong.Game
 
             if (_playWithBot && _roundStarted)
             {
-                if (_ball.Y > _rightPad.Y + _rightPad.Height / 2F / BotHeightCheckFactor
-                    && _ball.Y < _rightPad.Y - _rightPad.Height / 2F / BotHeightCheckFactor)
+                if (_ball.Y > _rightPad.Y + _rightPad.Height / 2F * BotHeightCheckFactor
+                    || _ball.Y < _rightPad.Y - _rightPad.Height / 2F * BotHeightCheckFactor)
                     _rightPad.MoveNoOOS(0, _rightPad.Y < _ball.Y ? PadSpeed : -PadSpeed);
             }
 
