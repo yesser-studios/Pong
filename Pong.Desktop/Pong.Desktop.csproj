@@ -30,11 +30,38 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
   <ItemGroup>
-    <MonoGameContentReference Include="..\Pong.Game.Shared\Content\Content.mgcb" />
+    <Compile Include="..\Pong.Game.Shared\Ball.cs">
+      <Link>Shared\Ball.cs</Link>
+    </Compile>
+    <Compile Include="..\Pong.Game.Shared\Game1.cs">
+      <Link>Shared\Game1.cs</Link>
+    </Compile>
+    <Compile Include="..\Pong.Game.Shared\GameObject.cs">
+      <Link>Shared\GameObject.cs</Link>
+    </Compile>
+    <Compile Include="..\Pong.Game.Shared\ScreenSide.cs">
+      <Link>Shared\ScreenSide.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="..\Pong.Game.Shared\Content\Ball.png">
+      <Link>Content\Ball.png</Link>
+    </Content>
+    <Content Include="..\Pong.Game.Shared\Content\CascadiaMono.ttf">
+      <Link>Content\CascadiaMono.ttf</Link>
+    </Content>
+    <MonoGameContentReference Include="..\Pong.Game.Shared\Content\Content.mgcb">
+      <Link>Content/Content.mgcb</Link>
+    </MonoGameContentReference>
+    <Content Include="..\Pong.Game.Shared\Content\GameFont.spritefont">
+      <Link>Content\GameFont.spritefont</Link>
+    </Content>
+    <Content Include="..\Pong.Game.Shared\Content\Pad.png">
+      <Link>Content\Pad.png</Link>
+    </Content>
   </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />
   </Target>
-  <Import Project="..\Pong.Game.Shared\Pong.Game.Shared.projitems" Label="Shared" />
 </Project>
