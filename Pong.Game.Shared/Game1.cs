@@ -17,7 +17,8 @@ namespace Pong.Game
 
         private bool _playWithBot = false;
         private bool _botButtonDown = false;
-        private const float BotHeightCheckFactor = 0.70F;
+        private float _botTargetY;
+        private const float BotDeadzone = 0.25f;
 
         private bool _gameStarted = false;
         private bool _showStartMessage = true;
@@ -63,6 +64,8 @@ namespace Pong.Game
             IsMouseVisible = false;
 
             _platformSpecific = platformSpecific;
+            
+            _botTargetY = _gameResolution.Y / 2f;
         }
         
         public Game1()
@@ -114,6 +117,8 @@ namespace Pong.Game
                 ballVelocity * BallSpeed,
                 _leftPad,
                 _rightPad);
+
+            _ball.OnBallBouncedEvent += OnBallBounced;
         }
 
         protected override void LoadContent()
@@ -204,6 +209,60 @@ namespace Pong.Game
             }
         }
         #endregion
+
+        protected void OnBallBounced(ScreenSide side)
+        {
+            if (side == ScreenSide.Left)
+                SimulateBall();
+        }
+        
+        /// <summary>
+        /// Simulates ball movement from the left side to the right side and returns the position at which it hit the right pad level. <para />
+        /// The position is then stored in <see cref="_botTargetY"/>.
+        /// </summary>
+        protected void SimulateBall()
+        {
+            if (!_playWithBot)
+                return;
+
+            var dummyBall = new GameObject(_ball.Texture, _ball.Position, _ball.Scale, null,
+                _gameResolution.X, _gameResolution.Y)
+            {
+                Velocity = _ball.Velocity
+            };
+
+            var lastTouched = ScreenSide.Center;
+            
+            while (dummyBall.Position.X + _ball.Width / 2 < _rightPad.Position.X - _rightPad.Width / 2)
+            {
+                dummyBall.Position += dummyBall.Velocity;
+                var touchSide = dummyBall.CheckOOS();
+
+                var newVelocity = dummyBall.Velocity;
+
+                switch (touchSide)
+                {
+                    case ScreenSide.Bottom:
+                        newVelocity.Y = -MathF.Abs(dummyBall.Velocity.Y)
+                                        - (lastTouched != ScreenSide.Bottom
+                                            ? Ball.BOUNCE_SPEED_UP
+                                            : 0);
+                        lastTouched = ScreenSide.Bottom;
+                        break;
+                    case ScreenSide.Top:
+                        newVelocity.Y = MathF.Abs(newVelocity.Y)
+                                        + (lastTouched != ScreenSide.Top
+                                            ? Ball.BOUNCE_SPEED_UP
+                                            : 0);
+                        lastTouched = ScreenSide.Top;
+                        break;
+                }
+
+                dummyBall.Velocity = newVelocity;
+            }
+
+            _botTargetY = dummyBall.Position.Y;
+        }
 
         #region Update and Drawing
         protected override void Update(GameTime gameTime)
@@ -336,9 +395,9 @@ namespace Pong.Game
 
             if (_playWithBot && _roundStarted)
             {
-                if (_ball.Y > _rightPad.Y + _rightPad.Height / 2F * BotHeightCheckFactor
-                    || _ball.Y < _rightPad.Y - _rightPad.Height / 2F * BotHeightCheckFactor)
-                    _rightPad.MoveNoOOS(0, _rightPad.Y < _ball.Y ? PadSpeed : -PadSpeed);
+                if (_botTargetY > _rightPad.Y + _rightPad.Height * BotDeadzone
+                    || _botTargetY < _rightPad.Y - _rightPad.Height * BotDeadzone)
+                    _rightPad.MoveNoOOS(0, _rightPad.Y < _botTargetY ? PadSpeed : -PadSpeed);
             }
 
             #endregion
@@ -357,6 +416,9 @@ namespace Pong.Game
 
             if ((leftMoved && _leftStopped) || (rightMoved && _rightStopped))
             {
+                if (!_roundStarted && _ball.Velocity.X > 0)
+                    SimulateBall();
+                
                 _roundStarted = true;
                 _showStartMessage = false;
                 _gameStarted = true;
