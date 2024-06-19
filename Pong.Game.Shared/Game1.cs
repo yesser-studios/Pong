@@ -258,6 +258,14 @@ namespace Pong.Game
                         break;
                 }
 
+                if (dummyBall.Position.X - dummyBall.Width / 2 <=
+                    _leftPad.Position.X + _leftPad.Width / 2)
+                {
+                    newVelocity.X = MathF.Abs(newVelocity.X) +
+                                    (lastTouched != ScreenSide.Left ? Ball.BOUNCE_SPEED_UP : 0);
+                    lastTouched = ScreenSide.Left;
+                }
+
                 dummyBall.Velocity = newVelocity;
             }
 
