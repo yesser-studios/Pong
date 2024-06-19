@@ -233,7 +233,7 @@ namespace Pong.Game
 
             var lastTouched = ScreenSide.Center;
             
-            while (dummyBall.Position.X + _ball.Width / 2 < _rightPad.Position.X - _rightPad.Width / 2)
+            while (dummyBall.Position.X + (_ball.Width / 2) < _rightPad.Position.X - (_rightPad.Width / 2))
             {
                 dummyBall.Position += dummyBall.Velocity;
                 var touchSide = dummyBall.CheckOOS();
@@ -258,8 +258,8 @@ namespace Pong.Game
                         break;
                 }
 
-                if (dummyBall.Position.X - dummyBall.Width / 2 <=
-                    _leftPad.Position.X + _leftPad.Width / 2)
+                if (dummyBall.Position.X - (dummyBall.Width / 2) <=
+                    _leftPad.Position.X + (_leftPad.Width / 2))
                 {
                     newVelocity.X = MathF.Abs(newVelocity.X) +
                                     (lastTouched != ScreenSide.Left ? Ball.BOUNCE_SPEED_UP : 0);
@@ -296,7 +296,7 @@ namespace Pong.Game
                 || plr2GamepadState.IsButtonDown(Buttons.Start))
                 Restart();
 
-            if (!_botButtonDown && keyboard.IsKeyDown(Keys.B)
+            if (!(_botButtonDown) && keyboard.IsKeyDown(Keys.B)
                 || plr1GamepadState.IsButtonDown(Buttons.Y)
                 || plr2GamepadState.IsButtonDown(Buttons.Y))
             {
@@ -403,8 +403,8 @@ namespace Pong.Game
 
             if (_playWithBot && _roundStarted)
             {
-                if (_botTargetY > _rightPad.Y + _rightPad.Height * BotDeadzone
-                    || _botTargetY < _rightPad.Y - _rightPad.Height * BotDeadzone)
+                if (_botTargetY > _rightPad.Y + (_rightPad.Height * BotDeadzone)
+                    || _botTargetY < _rightPad.Y - (_rightPad.Height * BotDeadzone))
                     _rightPad.MoveNoOOS(0, _rightPad.Y < _botTargetY ? PadSpeed : -PadSpeed);
             }
 
