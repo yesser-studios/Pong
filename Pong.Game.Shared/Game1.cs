@@ -17,7 +17,7 @@ namespace Pong.Game
 
         private bool _playWithBot = false;
         private bool _botButtonDown = false;
-        private const float BotHeightCheckFactor = 0.75F;
+        private const float BotHeightCheckFactor = 0.70F;
 
         private bool _gameStarted = false;
         private bool _showStartMessage = true;
