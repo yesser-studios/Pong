@@ -4,8 +4,8 @@
 # Rider ignored files
 /modules.xml
 /projectSettingsUpdater.xml
-/.idea.LinuxMacFilter.iml
 /contentModel.xml
+/.idea.Pong_LinuxMacFilter.iml
 # Editor-based HTTP Client requests
 /httpRequests/
 # Datasource local storage ignored files
