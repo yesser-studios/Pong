@@ -1,4 +1,4 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -14,6 +14,11 @@ namespace Pong.Game
         private readonly PlatformSpecific _platformSpecific;
 
         private readonly Point _gameResolution = new Point(960, 720);
+
+        private bool _playWithBot = false;
+        private bool _botButtonDown = false;
+        private float _botTargetY;
+        private const float BotDeadzone = 0.25f;
 
         private bool _gameStarted = false;
         private bool _showStartMessage = true;
@@ -59,6 +64,8 @@ namespace Pong.Game
             IsMouseVisible = false;
 
             _platformSpecific = platformSpecific;
+            
+            _botTargetY = _gameResolution.Y / 2f;
         }
         
         public Game1()
@@ -73,6 +80,12 @@ namespace Pong.Game
             _graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             _graphics.IsFullScreen = true;
+            
+#if DEBUG
+            // Make debug window borderless to allow breakpoints to redirect to IDE.
+            _graphics.HardwareModeSwitch = false;
+#endif
+            
             _graphics.ApplyChanges();
 
             base.Initialize();
@@ -104,6 +117,8 @@ namespace Pong.Game
                 ballVelocity * BallSpeed,
                 _leftPad,
                 _rightPad);
+
+            _ball.OnBallBouncedEvent += OnBallBounced;
         }
 
         protected override void LoadContent()
@@ -195,6 +210,68 @@ namespace Pong.Game
         }
         #endregion
 
+        protected void OnBallBounced(ScreenSide side)
+        {
+            if (side == ScreenSide.Left)
+                SimulateBall();
+        }
+        
+        /// <summary>
+        /// Simulates ball movement from the left side to the right side and returns the position at which it hit the right pad level. <para />
+        /// The position is then stored in <see cref="_botTargetY"/>.
+        /// </summary>
+        protected void SimulateBall()
+        {
+            if (!_playWithBot)
+                return;
+
+            var dummyBall = new GameObject(_ball.Texture, _ball.Position, _ball.Scale, null,
+                _gameResolution.X, _gameResolution.Y)
+            {
+                Velocity = _ball.Velocity
+            };
+
+            var lastTouched = ScreenSide.Center;
+            
+            while (dummyBall.Position.X + (_ball.Width / 2) < _rightPad.Position.X - (_rightPad.Width / 2))
+            {
+                dummyBall.Position += dummyBall.Velocity;
+                var touchSide = dummyBall.CheckOOS();
+
+                var newVelocity = dummyBall.Velocity;
+
+                switch (touchSide)
+                {
+                    case ScreenSide.Bottom:
+                        newVelocity.Y = -MathF.Abs(dummyBall.Velocity.Y)
+                                        - (lastTouched != ScreenSide.Bottom
+                                            ? Ball.BOUNCE_SPEED_UP
+                                            : 0);
+                        lastTouched = ScreenSide.Bottom;
+                        break;
+                    case ScreenSide.Top:
+                        newVelocity.Y = MathF.Abs(newVelocity.Y)
+                                        + (lastTouched != ScreenSide.Top
+                                            ? Ball.BOUNCE_SPEED_UP
+                                            : 0);
+                        lastTouched = ScreenSide.Top;
+                        break;
+                }
+
+                if (dummyBall.Position.X - (dummyBall.Width / 2) <=
+                    _leftPad.Position.X + (_leftPad.Width / 2))
+                {
+                    newVelocity.X = MathF.Abs(newVelocity.X) +
+                                    (lastTouched != ScreenSide.Left ? Ball.BOUNCE_SPEED_UP : 0);
+                    lastTouched = ScreenSide.Left;
+                }
+
+                dummyBall.Velocity = newVelocity;
+            }
+
+            _botTargetY = dummyBall.Position.Y;
+        }
+
         #region Update and Drawing
         protected override void Update(GameTime gameTime)
         {
@@ -209,6 +286,8 @@ namespace Pong.Game
             bool leftUsedDPad = false;
             bool rightUsedDPad = false;
 
+            #region Exit, Restart and Bot controls
+
             if (keyboard.IsKeyDown(Keys.Escape))
                 Exit();
 
@@ -217,27 +296,46 @@ namespace Pong.Game
                 || plr2GamepadState.IsButtonDown(Buttons.Start))
                 Restart();
 
+            if ((!(_botButtonDown) && keyboard.IsKeyDown(Keys.B))
+                || plr1GamepadState.IsButtonDown(Buttons.Y)
+                || plr2GamepadState.IsButtonDown(Buttons.Y))
+            {
+                _playWithBot = !_playWithBot;
+                _botButtonDown = true;
+            }
+
+            if (keyboard.IsKeyUp(Keys.B)
+                && plr1GamepadState.IsButtonUp(Buttons.Y)
+                && plr2GamepadState.IsButtonUp(Buttons.Y))
+                _botButtonDown = false;
+            
+            #endregion
+            
             #region Keyboard controls
+            
+            // Left Up
             if (keyboard.IsKeyDown(Keys.W))
             {
                 _leftPad.MoveNoOOS(0, -PadSpeed);
                 leftUsedKeyboard = true;
             }
 
+            // Left Down
             if (keyboard.IsKeyDown(Keys.S))
             {
                 _leftPad.MoveNoOOS(0, PadSpeed);
                 leftUsedKeyboard = true;
             }
 
-            if (keyboard.IsKeyDown(Keys.Up))
+            // Right Up
+            if (keyboard.IsKeyDown(Keys.Up) && !_playWithBot)
             {
                 _rightPad.MoveNoOOS(0, -PadSpeed);
                 rightUsedKeyboard = true;
             }
 
-
-            if (keyboard.IsKeyDown(Keys.Down))
+            // Right Down
+            if (keyboard.IsKeyDown(Keys.Down) && !_playWithBot)
             {
                 _rightPad.MoveNoOOS(0, PadSpeed);
                 rightUsedKeyboard = true;
@@ -246,41 +344,70 @@ namespace Pong.Game
             #endregion
 
             #region Gamepad controls
-            if ((plr1GamepadState.ThumbSticks.Left.Y > GamepadDeadzone || plr1GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone) && !leftUsedKeyboard)
+            
+            // Left Thumbstick
+            if ((plr1GamepadState.ThumbSticks.Left.Y > GamepadDeadzone 
+                 || plr1GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone)
+                && !leftUsedKeyboard)
             {
                 _leftPad.MoveNoOOS(0, -plr1GamepadState.ThumbSticks.Left.Y * PadSpeed * GamepadSensitivity);
                 leftUsedStick = true;
             }
-
-            if ((plr2GamepadState.ThumbSticks.Left.Y > GamepadDeadzone || plr2GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone) && !rightUsedKeyboard)
+            
+            // Right Thumbstick
+            if ((plr2GamepadState.ThumbSticks.Left.Y > GamepadDeadzone 
+                 || plr2GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone) 
+                && !rightUsedKeyboard && !_playWithBot)
             {
                 _rightPad.MoveNoOOS(0, -plr2GamepadState.ThumbSticks.Left.Y * PadSpeed * GamepadSensitivity);
                 rightUsedStick = true;
             }
-
-            if (plr1GamepadState.DPad.Up == ButtonState.Pressed && !leftUsedKeyboard && !leftUsedStick)
+            
+            // Left DPad Up
+            if (plr1GamepadState.DPad.Up == ButtonState.Pressed
+                && !leftUsedKeyboard && !leftUsedStick)
             {
                 _leftPad.MoveNoOOS(0, -PadSpeed);
                 leftUsedDPad = true;
             }
 
-            if (plr1GamepadState.DPad.Down == ButtonState.Pressed && !leftUsedKeyboard && !leftUsedStick)
+            // Left DPad Down
+            if (plr1GamepadState.DPad.Down == ButtonState.Pressed
+                && !leftUsedKeyboard && !leftUsedStick)
             {
                 _leftPad.MoveNoOOS(0, PadSpeed);
                 leftUsedDPad = true;
             }
 
-            if (plr2GamepadState.DPad.Up == ButtonState.Pressed && !rightUsedKeyboard && !rightUsedStick)
+            // Right DPad Up
+            if (plr2GamepadState.DPad.Up == ButtonState.Pressed
+                && !rightUsedKeyboard && !rightUsedStick
+                && !_playWithBot)
             {
                 _rightPad.MoveNoOOS(0, -PadSpeed);
                 rightUsedDPad = true;
             }
 
-            if (plr2GamepadState.DPad.Down == ButtonState.Pressed && !rightUsedKeyboard && !rightUsedStick)
+            // Right DPad down
+            if (plr2GamepadState.DPad.Down == ButtonState.Pressed
+                && !rightUsedKeyboard && !rightUsedStick
+                && !_playWithBot)
             {
                 _rightPad.MoveNoOOS(0, PadSpeed);
                 rightUsedDPad = true;
             }
+            
+            #endregion
+
+            #region Bot Movement
+
+            if (_playWithBot && _roundStarted)
+            {
+                if (_botTargetY > _rightPad.Y + (_rightPad.Height * BotDeadzone)
+                    || _botTargetY < _rightPad.Y - (_rightPad.Height * BotDeadzone))
+                    _rightPad.MoveNoOOS(0, _rightPad.Y < _botTargetY ? PadSpeed : -PadSpeed);
+            }
+
             #endregion
 
             bool moved = leftUsedKeyboard || rightUsedKeyboard
@@ -297,6 +424,9 @@ namespace Pong.Game
 
             if ((leftMoved && _leftStopped) || (rightMoved && _rightStopped))
             {
+                if (!_roundStarted && _ball.Velocity.X > 0)
+                    SimulateBall();
+                
                 _roundStarted = true;
                 _showStartMessage = false;
                 _gameStarted = true;
@@ -356,14 +486,15 @@ namespace Pong.Game
             #region Text
             if (!_gameEnded)
                 WriteStatusText(_showStartMessage ?
-                    "Left: W-S/Gamepad 1 stick/Gamepad 1 Dpad Up-Down\n"
-                        + "Right: Up-Down Arrow/Gamepad 2 stick/Gamepad 2 Dpad Up-Down\n"
-                        + "Move to start"
+                    "Left: W-S/Gamepad 1 stick/Gamepad 1 Dpad Up-Down"
+                        + "\n" + (_playWithBot ? "Right: Played by bot" : "Right: Up-Down Arrow/Gamepad 2 stick/Gamepad 2 Dpad Up-Down")
+                        + "\nMove to start"
+                        + "\nPress B/Gamepad Y button to play with " + (_playWithBot ? "another person" : "bot")
                     : $"{_leftScore} - {_rightScore}");
             else
                 WriteStatusText((_winningPlayer == ScreenSide.Left ?
-                    "Left player won!"
-                    : "Right player won!")
+                    _playWithBot ? "You won!" : "Left player won!"
+                    : _playWithBot ? "You lose..." : "Right player won!")
                         + "\nPress Esc to quit. (on PC only)"
                         + "\nPress R on keyboard or Menu button on gamepad to restart.");
             #endregion
