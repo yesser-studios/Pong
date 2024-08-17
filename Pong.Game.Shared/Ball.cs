@@ -7,12 +7,16 @@ namespace Pong.Game
     public class Ball : GameObject
     {
         #region Variables
-        const float BOUNCE_SPEED_UP = 1f;
+        public const float BOUNCE_SPEED_UP = 1f;
 
         GameObject leftPad;
         GameObject rightPad;
 
         ScreenSide lastTouched = ScreenSide.Center;
+
+        public delegate void OnBallBounced(ScreenSide bounceSide);
+        public event OnBallBounced OnBallBouncedEvent;
+        
         #endregion
 
         public Ball(
@@ -84,6 +88,9 @@ namespace Pong.Game
                 lastTouched = side;
 
             Velocity = newVelocity;
+
+            if (side != ScreenSide.Center)
+                OnBallBouncedEvent?.Invoke(side);
         }
         #endregion
 
