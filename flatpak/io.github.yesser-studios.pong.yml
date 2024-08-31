@@ -1,0 +1,28 @@
+id: io.github.yesserstudios.pong
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.dotnet8
+build-options:
+  prepend-path: "/usr/lib/sdk/dotnet8/bin"
+  append-ld-library-path: "/usr/lib/sdk/dotnet8/lib"
+  prepend-pkg-config-path: "/usr/lib/sdk/dotnet8/lib/pkgconfig"
+
+command: Pong.Desktop
+modules:
+  - name: dotnet
+    buildsystem: simple
+    build-commands:
+    - /usr/lib/sdk/dotnet8/bin/install.sh
+
+  - name: pong
+    buildsystem: simple
+    build-commands:
+      - ls
+      - dotnet publish Pong.Desktop/Pong.Desktop.csproj -c Release -o ${FLATPAK_DEST}/bin --source ./nuget-sources
+    sources:
+      - type: git
+        url: https://github.com/yesser-studios/Pong.git
+        branch: snapcraft
+      - ./nuget-sources.json
