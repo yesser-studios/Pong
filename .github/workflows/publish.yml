@@ -48,4 +48,11 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         file: windows-x64-${{ github.ref }}.zip
-      
+  build-flatpak:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
