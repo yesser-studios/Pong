@@ -1,0 +1,13 @@
+id: io.github.yesser-studios.pong
+runtime: org.freedesktop.Platform
+runtime-version: '23.08'
+sdk: org.freedesktop.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.dotnet8
+command: pong
+modules:
+  - name: Pong.Desktop
+    buildsystem: simple
+    build-commands:
+      - install.sh
+      - dotnet publish -c Release -o /app/bin
