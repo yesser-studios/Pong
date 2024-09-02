@@ -395,7 +395,10 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-*DS_Store
+# Flatpak
 *.flatpak-builder/
 builddir/
-flatpak/nuget-sources.json
+repo/
+
+# OS-specific files
+*DS_Store
