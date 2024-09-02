@@ -45,5 +45,5 @@ modules:
     sources:
       - type: git
         url: https://github.com/yesser-studios/Pong.git
-        branch: flatpak
+        branch: flathub
       # - ./nuget-sources.json
