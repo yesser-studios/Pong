@@ -17,6 +17,9 @@ build-options:
   prepend-path: "/usr/lib/sdk/dotnet8/bin"
   append-ld-library-path: "/usr/lib/sdk/dotnet8/lib"
   prepend-pkg-config-path: "/usr/lib/sdk/dotnet8/lib/pkgconfig"
+finish-args:
+  - --device=dri
+  - --socket=wayland
 
 command: Pong.Desktop
 modules:
