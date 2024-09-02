@@ -30,11 +30,13 @@ modules:
 
   - name: pong
     buildsystem: simple
+    build-options:
+      build-args:
+        - --share=network
     build-commands:
-      - ls
-      - dotnet publish Pong.Desktop/Pong.Desktop.csproj -c Release -o ${FLATPAK_DEST}/bin --source ./nuget-sources
+      - dotnet publish Pong.Desktop/Pong.Desktop.csproj --self-contained -c Release -o ${FLATPAK_DEST}/bin
     sources:
       - type: git
         url: https://github.com/yesser-studios/Pong.git
         branch: snapcraft
-      - ./nuget-sources.json
+      # - ./nuget-sources.json
