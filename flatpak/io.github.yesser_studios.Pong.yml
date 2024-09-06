@@ -4,15 +4,6 @@ runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
 sdk-extensions:
   - org.freedesktop.Sdk.Extension.dotnet8
-add-extensions:
-  org.freedesktop.Platform.GL.default:
-    version: '1.0'
-    directory: extension_directory
-    add-ld-path: lib
-    merge-dirs: plug-ins;help
-    subdirectories: true
-    no-autodownload: true
-    autodelete: true
 build-options:
   prepend-path: "/usr/lib/sdk/dotnet8/bin"
   append-ld-library-path: "/usr/lib/sdk/dotnet8/lib"
@@ -33,8 +24,6 @@ modules:
   - name: pong
     buildsystem: simple
     build-options:
-      build-args:
-        - --share=network
       arch:
         aarch64:
           env:
@@ -44,10 +33,9 @@ modules:
             RUNTIME: linux-x64
     build-commands:
       - dotnet publish Pong.Desktop/Pong.Desktop.csproj --self-contained --runtime $RUNTIME -c Release -o ${FLATPAK_DEST}/bin
-      - mkdir -p ${FLATPAK_DEST}/share/applications/
-      - mkdir -p ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps
-      - cp flatpak/io.github.yesser_studios.Pong.desktop ${FLATPAK_DEST}/share/applications/
-      - cp flatpak/io.github.yesser_studios.Pong.png ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps
+      - install -Dm644 flatpak/io.github.yesser_studios.Pong.desktop -t ${FLATPAK_DEST}/share/applications/
+      - install -Dm644 flatpak/io.github.yesser_studios.Pong.png -t ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps
+      - install -Dm644 flatpak/io.github.yesser_studios.Pong.metainfo.xml -t ${FLATPAK_DEST}/share/metainfo
     sources:
       - type: git
         url: https://github.com/yesser-studios/Pong.git
