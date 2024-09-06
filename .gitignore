@@ -395,4 +395,10 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
+# Flatpak
+*.flatpak-builder/
+builddir/
+repo/
+
+# OS-specific files
 *DS_Store
