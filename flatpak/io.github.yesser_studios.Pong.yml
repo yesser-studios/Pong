@@ -1,4 +1,4 @@
-id: io.github.yesserstudios.pong
+id: io.github.yesser_studios.pong
 runtime: org.freedesktop.Platform
 runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
@@ -46,8 +46,8 @@ modules:
       - dotnet publish Pong.Desktop/Pong.Desktop.csproj --self-contained --runtime $RUNTIME -c Release -o ${FLATPAK_DEST}/bin
       - mkdir -p ${FLATPAK_DEST}/share/applications/
       - mkdir -p ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps
-      - cp flatpak/io.github.yesserstudios.pong.desktop ${FLATPAK_DEST}/share/applications/
-      - cp flatpak/io.github.yesserstudios.pong.png ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps
+      - cp flatpak/io.github.yesser_studios.Pong.desktop ${FLATPAK_DEST}/share/applications/
+      - cp flatpak/io.github.yesser_studios.Pong.png ${FLATPAK_DEST}/share/icons/hicolor/128x128/apps
     sources:
       - type: git
         url: https://github.com/yesser-studios/Pong.git
