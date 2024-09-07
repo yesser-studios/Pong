@@ -9,6 +9,11 @@
   <icon type="remote">https://raw.githubusercontent.com/yesser-studios/Pong/main/Pong.Desktop/Pong_Ball-1000.png</icon>
   <icon type="stock">io.github.yesser_studios.Pong</icon>
 
+  <branding>
+	  <color type="primary" scheme_preference="dark">#000000</color>
+	  <color type="primary" scheme_preference="light">#1e1e1e</color>
+  </branding>
+
   <content_rating type="oars-1.1" />
 
   <metadata_license>MIT</metadata_license>
