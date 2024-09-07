@@ -29,22 +29,22 @@ jobs:
     - name: Publish
       run: dotnet publish -c Release -o ./release --self-contained
     - name: Create tar.gz package
-      if: ${{ matrix.os == "ubuntu-latest" }}
+      if: ${{ matrix.os == ubuntu-latest }}
       run: |
         tar -czvf linux-x64-${{ github.ref }}.tar.gz ./release
         butler push linux-x64-${{ github.ref }}.tar.gz yesseruser/pong:linux-x64
     - name: Publish linux to release
-      if: ${{ matrix.os == "ubuntu-latest" }}
+      if: ${{ matrix.os == ubuntu-latest }}
       uses: svenstaro/upload-release-action@v2
       with:
         file: linux-x64-${{ github.ref }}.tar.gz
     - name: Create zip package
-      if: ${{ matrix.os == "windows-latest" }}
+      if: ${{ matrix.os == windows-latest }}
       run: |
         7z a windows-x64-${{ github.ref }}.zip .\release\*
         butler push windows-x64-${{ github.ref }}.zip yesseruser/pong:win64
     - name: Publish windows to release
-      if: ${{ matrix.os == "windows-latest" }}
+      if: ${{ matrix.os == windows-latest }}
       uses: svenstaro/upload-release-action@v2
       with:
         file: windows-x64-${{ github.ref }}.zip
