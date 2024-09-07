@@ -32,7 +32,7 @@ jobs:
     - name: Publish linux to release
       uses: svenstaro/upload-release-action@v2
       with:
-        file: linux-x64-${{ github.ref }}.tar.gz
+        file: linux-universal-${{ github.ref }}.tar.gz
         
   build-windows:
     runs-on: windows-latest
