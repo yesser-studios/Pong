@@ -27,12 +27,12 @@ jobs:
       run: dotnet publish -c Release -o ./release ./Pong.Desktop/Pong.Desktop.csproj
     - name: Create tar.gz package
       run: |
-        tar -czvf linux-x64-${{ github.ref }}.tar.gz ./release
-        butler push linux-x64-${{ github.ref }}.tar.gz yesseruser/pong:linux-x64
+        tar -czvf linux-universal.tar.gz ./release
+        butler push linux-universal.tar.gz yesseruser/pong:linux-x64
     - name: Publish linux to release
       uses: svenstaro/upload-release-action@v2
       with:
-        file: linux-universal-${{ github.ref }}.tar.gz
+        file: linux-universal.tar.gz
         
   build-windows:
     runs-on: windows-latest
@@ -52,12 +52,12 @@ jobs:
       run: dotnet publish -c Release -o ./release --self-contained
     - name: Create zip package
       run: |
-        7z a windows-x64-${{ github.ref }}.zip .\release\*
-        butler push windows-x64-${{ github.ref }}.zip yesseruser/pong:win64
+        7z a windows-x64.zip .\release\*
+        butler push windows-x64.zip yesseruser/pong:win64
     - name: Publish windows to release
       uses: svenstaro/upload-release-action@v2
       with:
-        file: windows-x64-${{ github.ref }}.zip
+        file: windows-x64.zip
   build-flatpak:
     runs-on: ubuntu-latest
     steps:
