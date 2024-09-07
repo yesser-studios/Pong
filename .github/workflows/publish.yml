@@ -3,6 +3,9 @@
 
 name: .NET
 
+permissions:
+  contents: write
+
 on:
   release:
     types: ["published"]
@@ -49,7 +52,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
-      run: dotnet publish -c Release -o ./release --self-contained
+      run: dotnet publish -c Release -o ./release --self-contained ./Pong.Desktop/Pong.Desktop.csproj
     - name: Create zip package
       run: |
         7z a windows-x64.zip .\release\*
