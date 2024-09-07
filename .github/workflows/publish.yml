@@ -24,7 +24,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
-      run: dotnet publish -c Release -o ./release --self-contained
+      run: dotnet publish -c Release -o ./release ./Pong.Desktop/Pong.Desktop.csproj
     - name: Create tar.gz package
       run: |
         tar -czvf linux-x64-${{ github.ref }}.tar.gz ./release
