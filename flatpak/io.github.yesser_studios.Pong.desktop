@@ -2,5 +2,5 @@
 Name=Pong by Yesser Studios
 Exec=Pong.Desktop
 Type=Application
-Icon=io.github.yesserstudios.Pong
+Icon=io.github.yesser_studios.Pong
 Categories=Game;
