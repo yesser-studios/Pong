@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Pong by Yesser Studios
-Exec=Pong.Desktop
+Exec=run.sh
 Type=Application
 Icon=io.github.yesser_studios.Pong
 Categories=Game;
