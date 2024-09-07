@@ -9,8 +9,14 @@
   <icon type="remote">https://raw.githubusercontent.com/yesser-studios/Pong/main/Pong.Desktop/Pong_Ball-1000.png</icon>
   <icon type="stock">io.github.yesser_studios.Pong</icon>
 
+  <content_rating type="oars-1.1" />
+
   <metadata_license>MIT</metadata_license>
   <project_license>MIT</project_license>
+
+  <categories>
+	  <category>Game</category>
+  </categories>
   
   <supports>
     <control>keyboard</control>
