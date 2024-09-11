@@ -2,7 +2,7 @@
 <component type="desktop-application">
   <id>io.github.yesser_studios.Pong</id>
   
-  <name>Pong by Yesser Studios</name>
+  <name>Pong</name>
   <summary>This Pong clone has everything you would expect from a Pong clone - two pads and a ball</summary>
   <url type="homepage">https://github.com/yesser-studios/Pong</url>
   <url type="bugtracker">https://github.com/yesser-studios/Pong/issues</url>
