@@ -109,7 +109,7 @@ namespace Pong.Game
 
             _ball = new Ball(
                 _ballTex,
-                new Vector2(_gameResolution.X / 2, _gameResolution.Y / 2),
+                new Vector2(_gameResolution.X / 2f, _gameResolution.Y / 2f),
                 1f,
                 _spriteBatch,
                 _gameResolution.X,
@@ -127,7 +127,7 @@ namespace Pong.Game
 
             _leftPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
-                new Vector2(PadXOffset, _gameResolution.Y / 2),
+                new Vector2(PadXOffset, _gameResolution.Y / 2f),
                 PadScale,
                 _spriteBatch,
                 _gameResolution.X,
@@ -135,7 +135,7 @@ namespace Pong.Game
 
             _rightPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
-                new Vector2(_gameResolution.X - PadXOffset, _gameResolution.Y / 2),
+                new Vector2(_gameResolution.X - PadXOffset, _gameResolution.Y / 2f),
                 PadScale,
                 _spriteBatch,
                 _gameResolution.X,
