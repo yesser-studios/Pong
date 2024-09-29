@@ -55,6 +55,13 @@
   </developer>
 
   <releases>
+    <release version="1.2.1" date="2024-09-29">
+      <p>Changes in 1.2.1:</p>
+      <ul>
+        <li>Fixed a bug where pressing Y on gamepad would flicker between playing against a bot and another player.</li>
+        <li>Restarting the game now returns pads to their original position.</li>
+      </ul>
+    </release>
 	  <release version="1.2.0" date="2024-09-07">
 		<description>
 			<p>This is the initial release on Flathub.</p>
