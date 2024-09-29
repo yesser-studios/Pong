@@ -100,6 +100,8 @@ namespace Pong.Game
             _leftScore = 0;
             _rightScore = 0;
             GenerateBall();
+            _leftPad.Position = new Vector2(PadXOffset, _gameResolution.Y / 2f);
+            _rightPad.Position = new Vector2(_gameResolution.X - PadXOffset, _gameResolution.Y / 2f);
         }
 
         private void GenerateBall()
