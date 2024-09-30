@@ -65,7 +65,7 @@ jobs:
   build-mac:
     runs-on: macos-latest
     env:
-      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEX }}
+      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
     steps:
     - uses: actions/checkout@v4
     - name: Setup .NET
@@ -73,7 +73,10 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Set up butler
-      uses: yesseruser/setup-butler@v1.4.1
+      run: |
+        curl -L -o butler.zip https://broth.itch.zone/butler/darwin-amd64/LATEST/archive/default
+        unzip -d butler butler.zip
+        chmod +x ./butler/butler
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
@@ -85,7 +88,7 @@ jobs:
         rm -rf ./release/Content
         mv ./release/* ./mac-bundle/Contents/MacOS
         mv ./mac-bundle ./Pong.app
-        butler push ./Pong.app yesseruser/pong:mac-arm64
+        ./butler/butler push ./Pong.app yesseruser/pong:mac-arm64
     - name: Archive app bundle
       run: tar -cvzf mac-arm64.app.tar.gz ./Pong.app
     - name: Publish Mac to release
