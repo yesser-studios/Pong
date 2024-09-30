@@ -80,7 +80,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
-      run: dotnet publish -c Release -o ./release --self-contained -p:PublishSingleFile=True ./Pong.Desktop/Pong.Desktop.csproj
+      run: dotnet publish -c Release -o ./release -p:PublishSingleFile=True ./Pong.Desktop/Pong.Desktop.csproj
     - name: Move files to app bundle
       run: |
         mkdir -p ./mac-bundle/Contents/Resources/Content
