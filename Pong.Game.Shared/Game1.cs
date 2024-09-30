@@ -100,6 +100,8 @@ namespace Pong.Game
             _leftScore = 0;
             _rightScore = 0;
             GenerateBall();
+            _leftPad.Position = new Vector2(PadXOffset, _gameResolution.Y / 2f);
+            _rightPad.Position = new Vector2(_gameResolution.X - PadXOffset, _gameResolution.Y / 2f);
         }
 
         private void GenerateBall()
@@ -109,7 +111,7 @@ namespace Pong.Game
 
             _ball = new Ball(
                 _ballTex,
-                new Vector2(_gameResolution.X / 2, _gameResolution.Y / 2),
+                new Vector2(_gameResolution.X / 2f, _gameResolution.Y / 2f),
                 1f,
                 _spriteBatch,
                 _gameResolution.X,
@@ -127,7 +129,7 @@ namespace Pong.Game
 
             _leftPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
-                new Vector2(PadXOffset, _gameResolution.Y / 2),
+                new Vector2(PadXOffset, _gameResolution.Y / 2f),
                 PadScale,
                 _spriteBatch,
                 _gameResolution.X,
@@ -135,7 +137,7 @@ namespace Pong.Game
 
             _rightPad = new GameObject(
                 Content.Load<Texture2D>("Pad"),
-                new Vector2(_gameResolution.X - PadXOffset, _gameResolution.Y / 2),
+                new Vector2(_gameResolution.X - PadXOffset, _gameResolution.Y / 2f),
                 PadScale,
                 _spriteBatch,
                 _gameResolution.X,
@@ -296,9 +298,10 @@ namespace Pong.Game
                 || plr2GamepadState.IsButtonDown(Buttons.Start))
                 Restart();
 
-            if ((!_botButtonDown && keyboard.IsKeyDown(Keys.B))
-                || plr1GamepadState.IsButtonDown(Buttons.Y)
-                || plr2GamepadState.IsButtonDown(Buttons.Y))
+            if (!_botButtonDown
+                && (keyboard.IsKeyDown(Keys.B)
+                    || plr1GamepadState.IsButtonDown(Buttons.Y)
+                    || plr2GamepadState.IsButtonDown(Buttons.Y)))
             {
                 _playWithBot = !_playWithBot;
                 _botButtonDown = true;
