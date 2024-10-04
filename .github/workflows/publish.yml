@@ -61,3 +61,39 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         file: windows-x64.zip
+
+  build-mac:
+    runs-on: macos-latest
+    env:
+      BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Set up butler
+      run: |
+        curl -L -o butler.zip https://broth.itch.zone/butler/darwin-amd64/LATEST/archive/default
+        unzip -d butler butler.zip
+        chmod +x ./butler/butler
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Publish
+      run: dotnet publish -c Release -o ./release -p:PublishSingleFile=True ./Pong.Desktop/Pong.Desktop.csproj
+    - name: Move files to app bundle
+      run: |
+        mkdir -p ./mac-bundle/Contents/Resources/Content
+        mv ./release/Content/* ./mac-bundle/Contents/Resources/Content
+        rm -rf ./release/Content
+        mv ./release/* ./mac-bundle/Contents/MacOS
+        mv ./mac-bundle ./Pong.app
+        ./butler/butler push ./Pong.app yesseruser/pong:mac-arm64
+    - name: Archive app bundle
+      run: tar -cvzf mac-arm64.app.tar.gz ./Pong.app
+    - name: Publish Mac to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        file: mac-arm64.app.tar.gz
+
+
