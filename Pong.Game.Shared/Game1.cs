@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Pong.Game
 {
@@ -85,6 +86,9 @@ namespace Pong.Game
             // Make debug window borderless to allow breakpoints to redirect to IDE.
             _graphics.HardwareModeSwitch = false;
 #endif
+            
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
+                _graphics.HardwareModeSwitch = false; // Force borderless window on Mac
             
             _graphics.ApplyChanges();
 
