@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Pong.Game
 {
@@ -86,7 +87,7 @@ namespace Pong.Game
             _graphics.HardwareModeSwitch = false;
 #endif
             
-            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 _graphics.HardwareModeSwitch = false; // Force borderless window on Mac
             
             _graphics.ApplyChanges();
