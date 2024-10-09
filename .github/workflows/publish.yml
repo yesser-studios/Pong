@@ -78,7 +78,9 @@ jobs:
         tools: 'freeimage'
         cache: yes
     - name: Symlink freeimage
-      run: ln -s /opt/homebrew/lib/libfreeimage.dylib /usr/local/lib/libFreeImage
+      run: |
+        mkdir -p /usr/local/lib
+        ln -s /opt/homebrew/lib/libfreeimage.dylib /usr/local/lib/libFreeImage
     - name: Set up butler
       run: |
         curl -L -o butler.zip https://broth.itch.zone/butler/darwin-amd64/LATEST/archive/default
