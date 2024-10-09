@@ -72,6 +72,16 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+    - name: Install packages
+      uses: tecolicom/actions-use-homebrew-tools@v1.3
+      with:
+        tools: 'freeimage freetype'
+        cache: yes
+    - name: Symlink packages
+      run: |
+        mkdir -p ~/.nuget/packages/dotnet-mgcb/3.8.1.303/tools/net6.0/any/
+        ln -s /opt/homebrew/lib/libfreeimage.dylib ~/.nuget/packages/dotnet-mgcb/3.8.1.303/tools/net6.0/any/libFreeImage.dylib
+        ln -s /opt/homebrew/lib/freetype6.dylib ~/.nuget/packages/dotnet-mgcb/3.8.1.303/tools/net6.0/any/freetype6.dylib
     - name: Set up butler
       run: |
         curl -L -o butler.zip https://broth.itch.zone/butler/darwin-amd64/LATEST/archive/default
