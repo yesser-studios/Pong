@@ -63,7 +63,7 @@ jobs:
         file: windows-x64.zip
 
   build-mac:
-    runs-on: [self-hosted, macOS, ARM64]
+    runs-on: macos-latest
     env:
       BUTLER_API_KEY: ${{ secrets.BUTLER_API_KEY }}
     steps:
