@@ -79,8 +79,8 @@ jobs:
         cache: yes
     - name: Symlink freeimage
       run: |
-        mkdir -p /usr/local/lib
-        ln -s /opt/homebrew/lib/libfreeimage.dylib /usr/local/lib/libFreeImage
+        mkdir -p ~/.nuget/packages/dotnet-mgcb/3.8.1.303/tools/net6.0/any/
+        ln -s /opt/homebrew/lib/libfreeimage.dylib ~/.nuget/packages/dotnet-mgcb/3.8.1.303/tools/net6.0/any/libFreeImage.dylib
     - name: Set up butler
       run: |
         curl -L -o butler.zip https://broth.itch.zone/butler/darwin-amd64/LATEST/archive/default
