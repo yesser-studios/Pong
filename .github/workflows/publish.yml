@@ -72,11 +72,13 @@ jobs:
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-    - name: install freeimage
+    - name: Install freeimage
       uses: tecolicom/actions-use-homebrew-tools@v1.3
       with:
         tools: 'freeimage'
         cache: yes
+    - name: Symlink freeimage
+      run: ln -s /opt/homebrew/lib/libfreeimage.dylib /usr/local/lib/libFreeImage
     - name: Set up butler
       run: |
         curl -L -o butler.zip https://broth.itch.zone/butler/darwin-amd64/LATEST/archive/default
