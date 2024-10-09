@@ -404,7 +404,7 @@ namespace Pong.Game
 
             #region Bot Movement
 
-            if (_playWithBot && _roundStarted)
+            if (_playWithBot && _roundStarted && _ball.Velocity.X > 0)
             {
                 if (_botTargetY > _rightPad.Y + (_rightPad.Height * BotDeadzone)
                     || _botTargetY < _rightPad.Y - (_rightPad.Height * BotDeadzone))
