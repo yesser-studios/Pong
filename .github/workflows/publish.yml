@@ -73,10 +73,7 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Set up butler
-      run: |
-        curl -L -o butler.zip https://broth.itch.zone/butler/darwin-amd64/LATEST/archive/default
-        unzip -d butler butler.zip
-        chmod +x ./butler/butler
+      uses: jdno/setup-butler@v1.4.0
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
@@ -89,7 +86,7 @@ jobs:
         mkdir -p ./mac-bundle/Contents/MacOS
         mv ./release/* ./mac-bundle/Contents/MacOS
         mv ./mac-bundle ./Pong.app
-        ./butler/butler push ./Pong.app yesseruser/pong:mac-arm64
+        butler push ./Pong.app yesseruser/pong:mac-arm64
     - name: Archive app bundle
       run: tar -cvzf mac-arm64.app.tar.gz ./Pong.app
     - name: Publish Mac to release
