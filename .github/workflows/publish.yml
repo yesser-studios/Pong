@@ -77,7 +77,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
-      run: dotnet publish -r osx-arm64 -c Release -o ./release -p:PublishSingleFile=True ./Pong.Desktop/Pong.Desktop.csproj
+      run: dotnet publish -r osx-arm64 -c Release -o ./release -p:PublishSingleFile=False ./Pong.Desktop/Pong.Desktop.csproj
     - name: Move files to app bundle
       run: |
         mkdir -p ./mac-bundle/Contents/Resources/Content
@@ -85,6 +85,7 @@ jobs:
         rm -rf ./release/Content
         mkdir -p ./mac-bundle/Contents/MacOS
         mv ./release/* ./mac-bundle/Contents/MacOS
+        chmod +x ./mac-bundle/Contents/MacOS/Pong
         mv ./mac-bundle ./Pong.app
         butler push ./Pong.app yesseruser/pong:mac-arm64
     - name: Archive app bundle
