@@ -86,6 +86,7 @@ jobs:
         mkdir -p ./mac-bundle/Contents/Resources/Content
         mv ./release/Content/* ./mac-bundle/Contents/Resources/Content
         rm -rf ./release/Content
+        mkdir -p ./mac-bundle/Contents/MacOS
         mv ./release/* ./mac-bundle/Contents/MacOS
         mv ./mac-bundle ./Pong.app
         ./butler/butler push ./Pong.app yesseruser/pong:mac-arm64
