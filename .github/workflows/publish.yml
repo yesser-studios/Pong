@@ -24,6 +24,8 @@ jobs:
         dotnet-version: 8.0.x
     - name: Set up butler
       uses: jdno/setup-butler@v1.4.0
+      with:
+        allowRedirectDowngrade: true
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
@@ -49,6 +51,8 @@ jobs:
         dotnet-version: 8.0.x
     - name: Set up butler
       uses: jdno/setup-butler@v1.4.0
+      with:
+        allowRedirectDowngrade: true
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
@@ -74,6 +78,8 @@ jobs:
         dotnet-version: 8.0.x
     - name: Set up butler
       uses: jdno/setup-butler@v1.4.0
+      with:
+        allowRedirectDowngrade: true
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
