@@ -15,4 +15,4 @@ This game includes:
 If you've found an issue, or have got an idea that could be implemented, feel free to [open an issue!](https://github.com/yesser-studios/Pong/issues/new)
 
 If you want to contribute code to the project, you can [fork the repository](https://github.com/yesser-studios/Pong/fork) and open a pull request.
-If you're on Mac or Linux, you can open the Pong_LinuxMacDev.slnf solution filter in Rider. ~Sadly, Visual Studio Code doesn't support solution filters at this moment.~ As of [Microsoft/vscode-dotnettools#103](https://github.com/microsoft/vscode-dotnettools/issues/103) Visual Studio Code supports solution filters. You can open them using the "*.NET: Open Solution*" command.
+If you're on Mac or Linux, you can open the Pong_LinuxMacDev.slnf solution filter in Rider. ~Sadly, Visual Studio Code doesn't support solution filters at this moment.~ As of [microsoft/vscode-dotnettools#103](https://github.com/microsoft/vscode-dotnettools/issues/103) Visual Studio Code supports solution filters. You can open them using the "*.NET: Open Solution*" command.
