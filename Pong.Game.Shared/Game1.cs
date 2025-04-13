@@ -87,8 +87,8 @@ namespace Pong.Game
             _graphics.HardwareModeSwitch = false;
 #endif
             
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-                _graphics.HardwareModeSwitch = false; // Force borderless window on Mac
+            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                _graphics.HardwareModeSwitch = false; // Force borderless window on Mac & Linux
             
             _graphics.ApplyChanges();
 
