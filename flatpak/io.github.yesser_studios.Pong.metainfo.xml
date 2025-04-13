@@ -55,6 +55,14 @@
   </developer>
 
   <releases>
+	  <release version="1.2.3" date="2025-04-13">
+		<description>
+			<p>Changes in 1.2.3:</p>
+			<ul>
+				<li>Pong now uses borderless windowed mode on Linux.</li>
+			</ul>
+		</description>
+	  </release>
 	  <release version="1.2.2" date="2024-10-09">
 		<description>
 			<p>Changes in 1.2.2:</p>
