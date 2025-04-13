@@ -1,0 +1,6 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Publish Pong.Desktop to folder (Linux)" type="DotNetFolderPublish" factoryName="Publish to folder">
+    <riderPublish configuration="Release" platform="Any CPU" ready_to_run="true" runtime="linux-x64" self_contained="true" target_folder="$PROJECT_DIR$/Pong.Desktop/bin/Release/net8.0/linux-x64/publish" target_framework="net8.0" trim_unused_assemblies="true" uuid_high="-5622673001972939235" uuid_low="-8418594028265780311" />
+    <method v="2" />
+  </configuration>
+</component>
