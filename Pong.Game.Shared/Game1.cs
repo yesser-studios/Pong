@@ -279,6 +279,10 @@ namespace Pong.Game
         }
 
         #region Update and Drawing
+        /// <summary>
+        /// Handles player and bot input, advances game state, moves paddles and the ball, and processes scoring each frame.
+        /// </summary>
+        /// <param name="gameTime">Provides timing values for this update tick.</param>
         protected override void Update(GameTime gameTime)
         {
             KeyboardState keyboard = Keyboard.GetState();
