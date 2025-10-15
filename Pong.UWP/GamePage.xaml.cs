@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -36,7 +37,8 @@ namespace Pong.UWP
             bool showEditionPrompt = _localSettings.Values["showEditionPrompt"] as bool? ?? true;
 
             // Check if user is on Windows, then prompt install of Desktop edition
-            if (showEditionPrompt && AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop")
+            if (showEditionPrompt && AnalyticsInfo.VersionInfo.DeviceFamily == "Windows.Desktop"
+                && Package.Current.Id.Architecture != Windows.System.ProcessorArchitecture.Arm)
             {
                 DesktopEditionPrompt prompt = new DesktopEditionPrompt(_localSettings);
                 await prompt.ShowAsync();
