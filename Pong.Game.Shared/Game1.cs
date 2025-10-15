@@ -302,7 +302,7 @@ namespace Pong.Game
                 || plr2GamepadState.IsButtonDown(Buttons.Start))
                 Restart();
 
-            if (!_botButtonDown
+            if (!_botButtonDown && !_gameStarted
                 && (keyboard.IsKeyDown(Keys.B)
                     || plr1GamepadState.IsButtonDown(Buttons.Y)
                     || plr2GamepadState.IsButtonDown(Buttons.Y)))
