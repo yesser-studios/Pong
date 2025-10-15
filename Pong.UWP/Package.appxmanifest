@@ -9,7 +9,7 @@
   <Identity
     Name="25078YesserStudios.PongbyYesserStudios"
     Publisher="CN=197534C1-4006-44A2-BFCD-CA87D3F8D948"
-    Version="1.2.2.0" />
+    Version="1.2.4.0" />
 
   <mp:PhoneIdentity PhoneProductId="46a04ba4-84e4-4e8f-a19d-1685de9dc787" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

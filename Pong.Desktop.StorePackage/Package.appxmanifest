@@ -9,7 +9,7 @@
   <Identity
     Name="25078YesserStudios.PongbyYesserStudiosforWindows"
     Publisher="CN=197534C1-4006-44A2-BFCD-CA87D3F8D948"
-    Version="1.2.2.0" />
+    Version="1.2.4.0" />
 
   <Properties>
     <DisplayName>Pong by Yesser Studios for Windows</DisplayName>
