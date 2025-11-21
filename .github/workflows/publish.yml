@@ -30,9 +30,20 @@ jobs:
       run: dotnet publish -c Release -o ./release ./Pong.Desktop/Pong.Desktop.csproj
     - name: Create tar.gz package
       run: |
-        tar -czvf linux-universal.tar.gz ./release
-        # butler push linux-universal.tar.gz yesseruser/pong:linux-x64
-    - name: Publish linux to release
+        tar -czvf linux-x64.tar.gz ./release
+        # butler push linux-x64.tar.gz yesseruser/pong:linux-x64
+    - name: Publish linux x64 to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        file: linux-x64.tar.gz
+    - name: Publish universal
+      run: |
+        rm -rf ./release
+        dotnet publish -c Release -o ./release -p:PublishAot=False ./Pong.Desktop/Pong.Desktop.csproj
+    - name: Create tar.gz package
+      run: |
+        tar -czvf linux-x64.tar.gz ./release
+    - name: Publish linux universal to release
       uses: svenstaro/upload-release-action@v2
       with:
         file: linux-universal.tar.gz
