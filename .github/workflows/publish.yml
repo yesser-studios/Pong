@@ -31,12 +31,12 @@ jobs:
     - name: Create tar.gz package
       run: |
         tar -czvf linux-universal.tar.gz ./release
-        butler push linux-universal.tar.gz yesseruser/pong:linux-x64
+        # butler push linux-universal.tar.gz yesseruser/pong:linux-x64
     - name: Publish linux to release
       uses: svenstaro/upload-release-action@v2
       with:
         file: linux-universal.tar.gz
-        
+
   build-windows:
     runs-on: windows-latest
     env:
@@ -58,7 +58,7 @@ jobs:
     - name: Create zip package
       run: |
         7z a windows-x64.zip .\release\*
-        butler push windows-x64.zip yesseruser/pong:win64
+        # butler push windows-x64.zip yesseruser/pong:win64
     - name: Publish windows to release
       uses: svenstaro/upload-release-action@v2
       with:
@@ -91,7 +91,7 @@ jobs:
         mv ./release/* ./mac-bundle/Contents/MacOS
         chmod +x ./mac-bundle/Contents/MacOS/Pong
         mv ./mac-bundle ./Pong.app
-        butler push ./Pong.app yesseruser/pong:mac-arm64
+        # butler push ./Pong.app yesseruser/pong:mac-arm64
     - name: Archive app bundle
       run: tar -cvzf mac-arm64.app.tar.gz ./Pong.app
     - name: Publish Mac to release
