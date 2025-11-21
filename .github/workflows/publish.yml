@@ -53,6 +53,8 @@ jobs:
       run: dotnet restore
     - name: Publish
       run: dotnet publish -c Release -o ./release --self-contained ./Pong.Desktop/Pong.Desktop.csproj
+    - name: Remove debug info
+      run: rm ./release/*.pdb
     - name: Create zip package
       run: |
         7z a windows-x64.zip .\release\*
@@ -78,6 +80,8 @@ jobs:
       run: dotnet restore
     - name: Publish
       run: dotnet publish -r osx-arm64 -c Release -o ./release -p:PublishSingleFile=False ./Pong.Desktop/Pong.Desktop.csproj
+    - name: Remove debug info
+      run: rm -rf ./release/*.dsym
     - name: Move files to app bundle
       run: |
         mkdir -p ./mac-bundle/Contents/Resources/Content
