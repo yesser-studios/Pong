@@ -79,7 +79,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
-      run: dotnet publish -r osx-arm64 -c Release -o ./release -p:PublishSingleFile=False ./Pong.Desktop/Pong.Desktop.csproj
+      run: dotnet publish -r osx-arm64 -c Release -o ./release -p:PublishSingleFile=False -p:PublishAot=False ./Pong.Desktop/Pong.Desktop.csproj
     - name: Remove debug info
       run: rm -rf ./release/*.dsym
     - name: Move files to app bundle
