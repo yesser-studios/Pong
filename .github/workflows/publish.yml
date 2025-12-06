@@ -43,7 +43,7 @@ jobs:
         dotnet publish -c Release -o ./release -p:PublishAot=False ./Pong.Desktop/Pong.Desktop.csproj
     - name: Create tar.gz package
       run: |
-        run: rm ./release/*.pdb
+        rm ./release/*.pdb
         tar -czvf linux-universal.tar.gz ./release
     - name: Publish linux universal to release
       uses: svenstaro/upload-release-action@v2
