@@ -30,7 +30,7 @@ jobs:
       run: dotnet publish -c Release -o ./release ./Pong.Desktop/Pong.Desktop.csproj
     - name: Create tar.gz package
       run: |
-        run: rm ./release/*.dbg
+        rm ./release/*.dbg
         tar -czvf linux-x64.tar.gz ./release
         # butler push linux-x64.tar.gz yesseruser/pong:linux-x64
     - name: Publish linux x64 to release
