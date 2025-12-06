@@ -64,4 +64,9 @@ public class PlatformSpecific
     {
         Client.Dispose();
     }
+
+    ~PlatformSpecific()
+    {
+        Client.Dispose();
+    }
 }
