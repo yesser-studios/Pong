@@ -60,17 +60,9 @@ public class PlatformSpecific : IDisposable
         UpdateRpc(scoreLeft, scoreRight, gameStarted);
     }
 
-    private void Dispose(bool disposing)
-    {
-        if (disposing)
-        {
-            Client?.Dispose();
-        }
-    }
-
     public void Dispose()
     {
-        Dispose(true);
+        Client?.Dispose();
         GC.SuppressFinalize(this);
     }
 }
