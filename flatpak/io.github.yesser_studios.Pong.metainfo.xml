@@ -60,7 +60,7 @@
               <p>Changes in 1.3.0:</p>
               <ul>
                   <li>The bot mode keybind is now enabled in-between rounds.</li>
-                  <li>Enabled NativeAOT support, shrinking the file size to </li>
+                  <li>Enabled NativeAOT on x64, shrinking the size to 23,9 MB</li>
               </ul>
           </description>
       </release>
