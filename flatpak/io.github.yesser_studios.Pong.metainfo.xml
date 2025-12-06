@@ -55,7 +55,7 @@
   </developer>
 
   <releases>
-      <release version="1.3.0">
+      <release version="1.3.0" date="2025-12-06">
           <p>Changes in 1.3.0:</p>
           <ul>
               <li>The bot mode keybind is now enabled in-between rounds.</li>
