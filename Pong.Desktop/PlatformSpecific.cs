@@ -5,7 +5,7 @@ using DiscordRPC.Message;
 namespace Pong.Game;
 
 // The UWP class must have all the public methods as this class. This will be called from the shared project.
-public class PlatformSpecific
+public class PlatformSpecific : IDisposable
 {
     private const string ClientId = "1226792720207450143";
     
@@ -60,8 +60,9 @@ public class PlatformSpecific
         UpdateRpc(scoreLeft, scoreRight, gameStarted);
     }
 
-    public void Closing()
+    public void Dispose()
     {
-        Client.Dispose();
+        Client?.Dispose();
+        GC.SuppressFinalize(this);
     }
 }
