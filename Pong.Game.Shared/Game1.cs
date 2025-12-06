@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 
 namespace Pong.Game
@@ -25,6 +26,7 @@ namespace Pong.Game
         private bool _showStartMessage = true;
         private bool _roundStarted = false;
         private bool _gameEnded = false;
+        private bool _botModeSwitched = false;
 
         private const int PadXOffset = 10;
         private const float PadScale = 0.5f;
@@ -216,6 +218,7 @@ namespace Pong.Game
         }
         #endregion
 
+        #region Ball Movement
         protected void OnBallBounced(ScreenSide side)
         {
             if (side == ScreenSide.Left)
@@ -277,6 +280,7 @@ namespace Pong.Game
 
             _botTargetY = dummyBall.Position.Y;
         }
+        #endregion
 
         #region Update and Drawing
         protected override void Update(GameTime gameTime)
@@ -309,6 +313,7 @@ namespace Pong.Game
             {
                 _playWithBot = !_playWithBot;
                 _botButtonDown = true;
+                _botModeSwitched = true;
             }
 
             if (keyboard.IsKeyUp(Keys.B)
@@ -453,6 +458,8 @@ namespace Pong.Game
                 ScreenSide scored = _ball.CheckScored();
                 if (scored != ScreenSide.Center)
                     Scored(scored);
+                if (_botModeSwitched)
+                    _botModeSwitched = false;
             }
             
             base.Update(gameTime);
@@ -460,6 +467,7 @@ namespace Pong.Game
             _platformSpecific?.UpdateFinished(_leftScore, _rightScore, _gameStarted);
         }
 
+        [SuppressMessage("ReSharper", "PossibleLossOfFraction")]
         private void WriteStatusText(string text)
         {
             Vector2 textMiddlePoint = _font.MeasureString(text) / 2;
@@ -497,7 +505,10 @@ namespace Pong.Game
                         + "\n" + (_playWithBot ? "Right: Played by bot" : "Right: Up-Down Arrow/Gamepad 2 stick/Gamepad 2 Dpad Up-Down")
                         + "\nMove to start"
                         + "\nPress B/Gamepad Y button to play with " + (_playWithBot ? "another person" : "bot")
-                    : $"{_leftScore} - {_rightScore}");
+                    : _botModeSwitched ? 
+                        $"   {_leftScore} - {_rightScore}" // Spaces on beginning to keep score centered 
+                            + $"\nBot {(_playWithBot ? "Enabled" : "Disabled")}" 
+                        : $"{_leftScore} - {_rightScore}");
             else
                 WriteStatusText((_winningPlayer == ScreenSide.Left ?
                     _playWithBot ? "You won!" : "Left player won!"
