@@ -4,11 +4,15 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
+using Gum.Forms.Controls;
+using MonoGameGum;
 
 namespace Pong.Game
 {
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+        private static GumService Gum => GumService.Default;
+        
         #region Variables
         private const float BallSpeed = 5f;
 
@@ -93,6 +97,8 @@ namespace Pong.Game
                 _graphics.HardwareModeSwitch = false; // Force borderless window on Mac & Linux
             
             _graphics.ApplyChanges();
+
+            Gum.Initialize(this);
 
             base.Initialize();
         }
@@ -462,6 +468,8 @@ namespace Pong.Game
                     _botModeSwitched = false;
             }
             
+            Gum.Update(gameTime);
+            
             base.Update(gameTime);
             
             _platformSpecific?.UpdateFinished(_leftScore, _rightScore, _gameStarted);
@@ -489,6 +497,8 @@ namespace Pong.Game
 
             _spriteBatch.End();
 
+            Gum.Draw();
+            
             base.Draw(gameTime);
 
             GraphicsDevice.SetRenderTarget(null);
