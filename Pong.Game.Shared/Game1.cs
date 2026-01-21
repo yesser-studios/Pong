@@ -98,7 +98,7 @@ namespace Pong.Game
             
             _graphics.ApplyChanges();
 
-            Gum.Initialize(this);
+            InitializeUI();
 
             base.Initialize();
         }
@@ -176,6 +176,19 @@ namespace Pong.Game
         {
             float output = _rnd.Next(1, 9) * 0.1f;
             return output * (_rnd.Next(0, 2) == 1 ? -1 : 1);
+        }
+
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        protected void InitializeUI()
+        {
+            Gum.Initialize(this);
+            
+            var mainPanel = new StackPanel();
+            mainPanel.AddToRoot();
+
+            var header = new Label();
+            header.Text = "Pong by Yesser Studios";
+            mainPanel.AddChild(header);
         }
 
         #endregion
