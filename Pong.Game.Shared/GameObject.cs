@@ -3,39 +3,30 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Pong.Game
 {
-    public class GameObject
+    public class GameObject(
+        Texture2D texture,
+        Vector2 position,
+        float scale,
+        SpriteBatch spriteBatch,
+        float screenWidth,
+        float screenHeight)
     {
         #region Variables
-        protected readonly float screenWidth;
-        protected readonly float screenHeight;
-        protected readonly SpriteBatch spriteBatch;
+        protected readonly float ScreenWidth = screenWidth;
 
-        public Texture2D Texture { get; }
-        public Vector2 Position { get; set; }
-        public float Scale { get; }
+        public Texture2D Texture { get; } = texture;
+        public Vector2 Position { get; set; } = position;
+        public float Scale { get; } = scale;
         public Vector2 Velocity {  get; set; } = Vector2.Zero;
 
-        public float Width { get => Texture.Width * Scale; }
-        public float Height { get => Texture.Height * Scale; }
-        public float X { get => Position.X; }
-        public float Y { get => Position.Y; }
-        #endregion
+        public float Width => Texture.Width * Scale;
+        public float Height => Texture.Height * Scale;
 
-        public GameObject(
-            Texture2D texture,
-            Vector2 position,
-            float scale,
-            SpriteBatch spriteBatch,
-            float screenWidth,
-            float screenHeight)
-        {
-            Texture = texture;
-            Position = position;
-            Scale = scale;
-            this.spriteBatch = spriteBatch;
-            this.screenWidth = screenWidth;
-            this.screenHeight = screenHeight;
-        }
+        // ReSharper disable once MemberCanBeProtected.Global
+        public float X => Position.X;
+        public float Y => Position.Y;
+
+        #endregion
 
         public void Draw()
             => spriteBatch.Draw(
@@ -44,13 +35,16 @@ namespace Pong.Game
                 null,
                 Color.White,
                 0,
+                // ReSharper disable PossibleLossOfFraction
                 new Vector2(Texture.Width / 2, Texture.Height / 2),
+                // ReSharper restore PossibleLossOfFraction
                 Scale,
                 SpriteEffects.None,
                 0);
 
         #region Movement
-        public void Move(float x, float y)
+
+        private void Move(float x, float y)
         {
             x += X;
             y += Y;            
@@ -60,8 +54,8 @@ namespace Pong.Game
 
         public virtual void MoveByVelocity()
         {
-            float x = X + Velocity.X;
-            float y = Y + Velocity.Y;
+            var x = X + Velocity.X;
+            var y = Y + Velocity.Y;
 
             Position = new Vector2(x, y);
         }
@@ -69,7 +63,7 @@ namespace Pong.Game
         /// <summary>
         /// Moves and checks if the object is out of the screen with the given width and height.
         /// </summary>
-        public void MoveNoOOS (float x, float y)
+        public void MoveNoOos (float x, float y)
         {
             Move(x, y);
 
@@ -77,19 +71,19 @@ namespace Pong.Game
         }
 
         /// <summary>
-        /// Checks whether or not the object is out of the screen.
+        /// Checks whether the object is out of the screen.
         /// If so, it will move the object on the screen.
         /// </summary>
-        public void MoveOnScreen()
+        private void MoveOnScreen()
         {
-            float x = X;
-            float y = Y;
+            var x = X;
+            var y = Y;
 
-            ScreenSide screenSide = CheckOOS();
+            var screenSide = CheckOos();
 
             if (screenSide == ScreenSide.Left) x = Width / 2;
             if (screenSide == ScreenSide.Top) y = Height / 2;
-            if (screenSide == ScreenSide.Right) x = screenWidth - (Width / 2);
+            if (screenSide == ScreenSide.Right) x = ScreenWidth - (Width / 2);
             if (screenSide == ScreenSide.Bottom) y = screenHeight - (Height / 2);
 
             Position = new Vector2(x, y);
@@ -97,25 +91,25 @@ namespace Pong.Game
         #endregion
 
         #region Checks
-        public ScreenSide CheckOOS()
+        public ScreenSide CheckOos()
         {
-            ScreenSide outOfScreen = ScreenSide.Center;
+            var outOfScreen = ScreenSide.Center;
             if (X - (Width / 2) < 0) outOfScreen = ScreenSide.Left;
             if (Y - (Height / 2) < 0) outOfScreen = ScreenSide.Top;
-            if (X + (Width / 2) > screenWidth) outOfScreen = ScreenSide.Right;
+            if (X + (Width / 2) > ScreenWidth) outOfScreen = ScreenSide.Right;
             if (Y + (Height / 2) > screenHeight) outOfScreen = ScreenSide.Bottom;
 
             return outOfScreen;
         }
 
-        public bool CollidesWith(GameObject other)
+        protected bool CollidesWith(GameObject other)
         {
             if (other == null) return false;
 
-            return (X + Width / 2 >= other.X - other.Width / 2)
-                && (other.X + other.Width / 2 >= X - Width / 2)
-                && (Y + Height / 2 >= other.Y - other.Height / 2)
-                && (other.Y + other.Height / 2 >= Y - Height / 2);
+            return (X + (Width / 2) >= other.X - (other.Width / 2))
+                && (other.X + (other.Width / 2) >= X - (Width / 2))
+                && (Y + (Height / 2) >= other.Y - (other.Height / 2))
+                && (other.Y + (other.Height / 2) >= Y - (Height / 2));
         }
         #endregion
     }

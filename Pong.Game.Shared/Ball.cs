@@ -7,12 +7,12 @@ namespace Pong.Game
     public class Ball : GameObject
     {
         #region Variables
-        public const float BOUNCE_SPEED_UP = 1f;
+        public const float BounceSpeedUp = 1f;
 
-        GameObject leftPad;
-        GameObject rightPad;
+        private readonly GameObject _leftPad;
+        private readonly GameObject _rightPad;
 
-        ScreenSide lastTouched = ScreenSide.Center;
+        private ScreenSide _lastTouched = ScreenSide.Center;
 
         public delegate void OnBallBounced(ScreenSide bounceSide);
         public event OnBallBounced OnBallBouncedEvent;
@@ -38,8 +38,8 @@ namespace Pong.Game
         {
 
             Velocity = initialVelocity;
-            this.leftPad = leftPad;
-            this.rightPad = rightPad;
+            this._leftPad = leftPad;
+            this._rightPad = rightPad;
         }
 
         #region Movement
@@ -52,40 +52,40 @@ namespace Pong.Game
 
         protected void Bounce()
         {
-            ScreenSide side = CheckOOS();
+            var side = CheckOos();
 
-            Vector2 newVelocity = Velocity;
+            var newVelocity = Velocity;
 
             if (side == ScreenSide.Bottom)
                 newVelocity.Y = -MathF.Abs(newVelocity.Y)
-                    - (lastTouched != ScreenSide.Bottom ?
-                        BOUNCE_SPEED_UP
+                    - (_lastTouched != ScreenSide.Bottom ?
+                        BounceSpeedUp
                         : 0);
             else if (side == ScreenSide.Top)
                 newVelocity.Y = MathF.Abs(newVelocity.Y)
-                    + (lastTouched != ScreenSide.Top ?
-                        BOUNCE_SPEED_UP
+                    + (_lastTouched != ScreenSide.Top ?
+                        BounceSpeedUp
                         : 0);
 
-            if (CollidesWith(leftPad))
+            if (CollidesWith(_leftPad))
             {
                 newVelocity.X = MathF.Abs(newVelocity.X)
-                    + (lastTouched != ScreenSide.Left ?
-                        BOUNCE_SPEED_UP
+                    + (_lastTouched != ScreenSide.Left ?
+                        BounceSpeedUp
                         : 0);
                 side = ScreenSide.Left;
             }
-            else if (CollidesWith(rightPad))
+            else if (CollidesWith(_rightPad))
             {
                 newVelocity.X = -MathF.Abs(newVelocity.X)
-                    - (lastTouched != ScreenSide.Right ?
-                        BOUNCE_SPEED_UP
+                    - (_lastTouched != ScreenSide.Right ?
+                        BounceSpeedUp
                         : 0);
                 side = ScreenSide.Right;
             }
 
             if (side != ScreenSide.Center)
-                lastTouched = side;
+                _lastTouched = side;
 
             Velocity = newVelocity;
 
@@ -99,7 +99,7 @@ namespace Pong.Game
         /// </summary>
         public ScreenSide CheckScored()
         {
-            if (X - (Width / 2) > screenWidth)
+            if (X - (Width / 2) > ScreenWidth)
                 return ScreenSide.Right;
             if (X + (Width / 2) < 0)
                 return ScreenSide.Left;

@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Gum.Forms.Controls;
 using MonoGameGum;
+using Pong.Desktop;
 
 namespace Pong.Game
 {
@@ -103,7 +104,7 @@ namespace Pong.Game
             base.Initialize();
         }
 
-        protected void Restart()
+        private void Restart()
         {
             _roundStarted = false;
             _gameEnded = false;
@@ -119,7 +120,7 @@ namespace Pong.Game
         private void GenerateBall()
         {
             // Generates a random Y velocity.
-            Vector2 ballVelocity = new Vector2(_rnd.Next(0, 2) == 1 ? -1 : 1, GenerateRandomBallYVelocity());
+            var ballVelocity = new Vector2(_rnd.Next(0, 2) == 1 ? -1 : 1, GenerateRandomBallYVelocity());
 
             _ball = new Ball(
                 _ballTex,
@@ -172,29 +173,32 @@ namespace Pong.Game
                 _graphics.PreferredBackBufferHeight);
         }
 
-        protected float GenerateRandomBallYVelocity()
+        private float GenerateRandomBallYVelocity()
         {
-            float output = _rnd.Next(1, 9) * 0.1f;
+            var output = _rnd.Next(1, 9) * 0.1f;
             return output * (_rnd.Next(0, 2) == 1 ? -1 : 1);
         }
 
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        protected void InitializeUI()
+        private void InitializeUI()
         {
             Gum.Initialize(this);
             
             var mainPanel = new StackPanel();
             mainPanel.AddToRoot();
 
-            var header = new Label();
-            header.Text = "Pong by Yesser Studios";
+            var header = new Label
+            {
+                Text = "Pong by Yesser Studios",
+            };
             mainPanel.AddChild(header);
         }
 
         #endregion
 
         #region Scoring
-        protected void Scored(ScreenSide side)
+
+        private void Scored(ScreenSide side)
         {
             switch (side)
             {
@@ -222,7 +226,8 @@ namespace Pong.Game
                     return;
             }
         }
-        protected void CheckWin()
+
+        private void CheckWin()
         {
             if (_leftScore >= 10)
             {
@@ -238,7 +243,8 @@ namespace Pong.Game
         #endregion
 
         #region Ball Movement
-        protected void OnBallBounced(ScreenSide side)
+
+        private void OnBallBounced(ScreenSide side)
         {
             if (side == ScreenSide.Left)
                 SimulateBall();
@@ -248,7 +254,7 @@ namespace Pong.Game
         /// Simulates ball movement from the left side to the right side and returns the position at which it hit the right pad level. <para />
         /// The position is then stored in <see cref="_botTargetY"/>.
         /// </summary>
-        protected void SimulateBall()
+        private void SimulateBall()
         {
             if (!_playWithBot)
                 return;
@@ -264,7 +270,7 @@ namespace Pong.Game
             while (dummyBall.Position.X + (_ball.Width / 2) < _rightPad.Position.X - (_rightPad.Width / 2))
             {
                 dummyBall.Position += dummyBall.Velocity;
-                var touchSide = dummyBall.CheckOOS();
+                var touchSide = dummyBall.CheckOos();
 
                 var newVelocity = dummyBall.Velocity;
 
@@ -273,14 +279,14 @@ namespace Pong.Game
                     case ScreenSide.Bottom:
                         newVelocity.Y = -MathF.Abs(dummyBall.Velocity.Y)
                                         - (lastTouched != ScreenSide.Bottom
-                                            ? Ball.BOUNCE_SPEED_UP
+                                            ? Ball.BounceSpeedUp
                                             : 0);
                         lastTouched = ScreenSide.Bottom;
                         break;
                     case ScreenSide.Top:
                         newVelocity.Y = MathF.Abs(newVelocity.Y)
                                         + (lastTouched != ScreenSide.Top
-                                            ? Ball.BOUNCE_SPEED_UP
+                                            ? Ball.BounceSpeedUp
                                             : 0);
                         lastTouched = ScreenSide.Top;
                         break;
@@ -290,7 +296,7 @@ namespace Pong.Game
                     _leftPad.Position.X + (_leftPad.Width / 2))
                 {
                     newVelocity.X = MathF.Abs(newVelocity.X) +
-                                    (lastTouched != ScreenSide.Left ? Ball.BOUNCE_SPEED_UP : 0);
+                                    (lastTouched != ScreenSide.Left ? Ball.BounceSpeedUp : 0);
                     lastTouched = ScreenSide.Left;
                 }
 
@@ -304,16 +310,16 @@ namespace Pong.Game
         #region Update and Drawing
         protected override void Update(GameTime gameTime)
         {
-            KeyboardState keyboard = Keyboard.GetState();
-            GamePadState plr1GamepadState = GamePad.GetState(PlayerIndex.One);
-            GamePadState plr2GamepadState = GamePad.GetState(PlayerIndex.Two);
+            var keyboard = Keyboard.GetState();
+            var plr1GamepadState = GamePad.GetState(PlayerIndex.One);
+            var plr2GamepadState = GamePad.GetState(PlayerIndex.Two);
 
-            bool leftUsedKeyboard = false;
-            bool rightUsedKeyboard = false;
-            bool leftUsedStick = false;
-            bool rightUsedStick = false;
-            bool leftUsedDPad = false;
-            bool rightUsedDPad = false;
+            var leftUsedKeyboard = false;
+            var rightUsedKeyboard = false;
+            var leftUsedStick = false;
+            var rightUsedStick = false;
+            var leftUsedDPad = false;
+            var rightUsedDPad = false;
 
             #region Exit, Restart and Bot controls
 
@@ -347,28 +353,28 @@ namespace Pong.Game
             // Left Up
             if (keyboard.IsKeyDown(Keys.W))
             {
-                _leftPad.MoveNoOOS(0, -PadSpeed);
+                _leftPad.MoveNoOos(0, -PadSpeed);
                 leftUsedKeyboard = true;
             }
 
             // Left Down
             if (keyboard.IsKeyDown(Keys.S))
             {
-                _leftPad.MoveNoOOS(0, PadSpeed);
+                _leftPad.MoveNoOos(0, PadSpeed);
                 leftUsedKeyboard = true;
             }
 
             // Right Up
             if (keyboard.IsKeyDown(Keys.Up) && !_playWithBot)
             {
-                _rightPad.MoveNoOOS(0, -PadSpeed);
+                _rightPad.MoveNoOos(0, -PadSpeed);
                 rightUsedKeyboard = true;
             }
 
             // Right Down
             if (keyboard.IsKeyDown(Keys.Down) && !_playWithBot)
             {
-                _rightPad.MoveNoOOS(0, PadSpeed);
+                _rightPad.MoveNoOos(0, PadSpeed);
                 rightUsedKeyboard = true;
             }
 
@@ -381,7 +387,7 @@ namespace Pong.Game
                  || plr1GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone)
                 && !leftUsedKeyboard)
             {
-                _leftPad.MoveNoOOS(0, -plr1GamepadState.ThumbSticks.Left.Y * PadSpeed * GamepadSensitivity);
+                _leftPad.MoveNoOos(0, -plr1GamepadState.ThumbSticks.Left.Y * PadSpeed * GamepadSensitivity);
                 leftUsedStick = true;
             }
             
@@ -390,7 +396,7 @@ namespace Pong.Game
                  || plr2GamepadState.ThumbSticks.Left.Y < -GamepadDeadzone) 
                 && !rightUsedKeyboard && !_playWithBot)
             {
-                _rightPad.MoveNoOOS(0, -plr2GamepadState.ThumbSticks.Left.Y * PadSpeed * GamepadSensitivity);
+                _rightPad.MoveNoOos(0, -plr2GamepadState.ThumbSticks.Left.Y * PadSpeed * GamepadSensitivity);
                 rightUsedStick = true;
             }
             
@@ -398,7 +404,7 @@ namespace Pong.Game
             if (plr1GamepadState.DPad.Up == ButtonState.Pressed
                 && !leftUsedKeyboard && !leftUsedStick)
             {
-                _leftPad.MoveNoOOS(0, -PadSpeed);
+                _leftPad.MoveNoOos(0, -PadSpeed);
                 leftUsedDPad = true;
             }
 
@@ -406,7 +412,7 @@ namespace Pong.Game
             if (plr1GamepadState.DPad.Down == ButtonState.Pressed
                 && !leftUsedKeyboard && !leftUsedStick)
             {
-                _leftPad.MoveNoOOS(0, PadSpeed);
+                _leftPad.MoveNoOos(0, PadSpeed);
                 leftUsedDPad = true;
             }
 
@@ -415,7 +421,7 @@ namespace Pong.Game
                 && !rightUsedKeyboard && !rightUsedStick
                 && !_playWithBot)
             {
-                _rightPad.MoveNoOOS(0, -PadSpeed);
+                _rightPad.MoveNoOos(0, -PadSpeed);
                 rightUsedDPad = true;
             }
 
@@ -424,7 +430,7 @@ namespace Pong.Game
                 && !rightUsedKeyboard && !rightUsedStick
                 && !_playWithBot)
             {
-                _rightPad.MoveNoOOS(0, PadSpeed);
+                _rightPad.MoveNoOos(0, PadSpeed);
                 rightUsedDPad = true;
             }
             
@@ -436,22 +442,18 @@ namespace Pong.Game
             {
                 if (_botTargetY > _rightPad.Y + (_rightPad.Height * BotDeadzone)
                     || _botTargetY < _rightPad.Y - (_rightPad.Height * BotDeadzone))
-                    _rightPad.MoveNoOOS(0, _rightPad.Y < _botTargetY ? PadSpeed : -PadSpeed);
+                    _rightPad.MoveNoOos(0, _rightPad.Y < _botTargetY ? PadSpeed : -PadSpeed);
             }
 
             #endregion
 
-            bool moved = leftUsedKeyboard || rightUsedKeyboard
-                || leftUsedStick || rightUsedStick
-                || leftUsedDPad || rightUsedDPad;
+            var leftMoved = leftUsedKeyboard
+                            || leftUsedStick
+                            || leftUsedDPad;
 
-            bool leftMoved = leftUsedKeyboard
-                || leftUsedStick
-                || leftUsedDPad;
-
-            bool rightMoved = rightUsedKeyboard
-                || rightUsedStick
-                || rightUsedDPad;
+            var rightMoved = rightUsedKeyboard
+                             || rightUsedStick
+                             || rightUsedDPad;
 
             if ((leftMoved && _leftStopped) || (rightMoved && _rightStopped))
             {
@@ -474,7 +476,7 @@ namespace Pong.Game
 
             if (_roundStarted)
             {
-                ScreenSide scored = _ball.CheckScored();
+                var scored = _ball.CheckScored();
                 if (scored != ScreenSide.Center)
                     Scored(scored);
                 if (_botModeSwitched)
@@ -491,9 +493,9 @@ namespace Pong.Game
         [SuppressMessage("ReSharper", "PossibleLossOfFraction")]
         private void WriteStatusText(string text)
         {
-            Vector2 textMiddlePoint = _font.MeasureString(text) / 2;
+            var textMiddlePoint = _font.MeasureString(text) / 2;
             // Places text in center of the screen
-            Vector2 position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 10);
+            var position = new Vector2(_graphics.PreferredBackBufferWidth / 2, _graphics.PreferredBackBufferHeight / 10);
             _spriteBatch.DrawString(_font, text, position, Color.White, 0, textMiddlePoint, 1.0f, SpriteEffects.None, 0.5f);
         }
 
@@ -543,14 +545,13 @@ namespace Pong.Game
             _spriteBatch.End();
         }
 
-        Rectangle GetRenderTargetDestination(Point resolution, int preferredBackBufferWidth, int preferredBackBufferHeight)
+        private Rectangle GetRenderTargetDestination(Point resolution, int preferredBackBufferWidth, int preferredBackBufferHeight)
         {
-            float resolutionRatio = (float)resolution.X / resolution.Y;
-            float screenRatio;
-            Point bounds = new Point(preferredBackBufferWidth, preferredBackBufferHeight);
-            screenRatio = (float)bounds.X / bounds.Y;
+            var resolutionRatio = (float)resolution.X / resolution.Y;
+            var bounds = new Point(preferredBackBufferWidth, preferredBackBufferHeight);
+            var screenRatio = (float)bounds.X / bounds.Y;
             float scale;
-            Rectangle rectangle = new Rectangle();
+            var rectangle = new Rectangle();
 
             if (resolutionRatio < screenRatio)
                 scale = (float)bounds.Y / resolution.Y;
@@ -567,9 +568,9 @@ namespace Pong.Game
             return CenterRectangle(new Rectangle(Point.Zero, bounds), rectangle);
         }
 
-        static Rectangle CenterRectangle(Rectangle outerRectangle, Rectangle innerRectangle)
+        private static Rectangle CenterRectangle(Rectangle outerRectangle, Rectangle innerRectangle)
         {
-            Point delta = outerRectangle.Center - innerRectangle.Center;
+            var delta = outerRectangle.Center - innerRectangle.Center;
             innerRectangle.Offset(delta);
             return innerRectangle;
         }
