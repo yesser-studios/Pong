@@ -229,6 +229,16 @@ namespace Pong.Game
             _mainMenuPanel.AddChild(playBotButton);
             playBotButton.Dock(Dock.FillHorizontally);
 
+            var quitButton = new Button
+            {
+                Text = "Quit",
+            };
+            quitButton.Click += (_, _) =>
+            {
+                Exit();
+            };
+            _mainMenuPanel.AddChild(quitButton);
+            quitButton.Dock(Dock.FillHorizontally);
         }
 
         #endregion
