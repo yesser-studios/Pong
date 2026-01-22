@@ -5,6 +5,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using Gum.Forms.Controls;
+using Gum.Wireframe;
 using MonoGameGum;
 using Pong.Desktop;
 
@@ -62,6 +63,8 @@ namespace Pong.Game
         private bool _leftStopped,
             _rightStopped = false;
 
+        private StackPanel _mainMenuPanel;
+
         #endregion
 
         #region Initialization
@@ -99,7 +102,9 @@ namespace Pong.Game
             
             _graphics.ApplyChanges();
 
-            InitializeUI();
+            Gum.Initialize(this);
+            
+            MainMenu();
 
             base.Initialize();
         }
@@ -179,19 +184,49 @@ namespace Pong.Game
             return output * (_rnd.Next(0, 2) == 1 ? -1 : 1);
         }
 
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        private void InitializeUI()
+        private void HideUi()
         {
-            Gum.Initialize(this);
+            Gum.Root.Children.Clear();
+            IsMouseVisible = false;
+        }
+        
+        private void MainMenu()
+        {
+            IsMouseVisible = true;
             
-            var mainPanel = new StackPanel();
-            mainPanel.AddToRoot();
+            _mainMenuPanel = new StackPanel();
+            _mainMenuPanel.AddToRoot();
+            _mainMenuPanel.Spacing = 3;
+            _mainMenuPanel.Anchor(Anchor.Center);
 
             var header = new Label
             {
                 Text = "Pong by Yesser Studios",
             };
-            mainPanel.AddChild(header);
+            _mainMenuPanel.AddChild(header);
+
+            var playMultiplayerButton = new Button
+            {
+                Text = "Play Multiplayer",
+            };
+            playMultiplayerButton.Click += (_, _) =>
+            {
+                HideUi();
+                _playWithBot = false;
+            };
+            _mainMenuPanel.AddChild(playMultiplayerButton);
+            
+            var playBotButton = new Button
+            {
+                Text = "Play with Bot",
+            };
+            playBotButton.Click += (_, _) =>
+            {
+                HideUi();
+                _playWithBot = true;
+            };
+            _mainMenuPanel.AddChild(playBotButton);
+
         }
 
         #endregion
@@ -511,11 +546,7 @@ namespace Pong.Game
             _rightPad.Draw();
 
             _spriteBatch.End();
-
-            Gum.Draw();
             
-            base.Draw(gameTime);
-
             GraphicsDevice.SetRenderTarget(null);
             GraphicsDevice.Clear(new Color(30, 30, 30));
 
@@ -543,6 +574,9 @@ namespace Pong.Game
             #endregion
 
             _spriteBatch.End();
+            
+            Gum.Draw();
+            base.Draw(gameTime);
         }
 
         private Rectangle GetRenderTargetDestination(Point resolution, int preferredBackBufferWidth, int preferredBackBufferHeight)
