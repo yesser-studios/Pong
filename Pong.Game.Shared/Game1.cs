@@ -215,6 +215,7 @@ namespace Pong.Game
                 _playWithBot = false;
             };
             _mainMenuPanel.AddChild(playMultiplayerButton);
+            playMultiplayerButton.Dock(Dock.FillHorizontally);
             
             var playBotButton = new Button
             {
@@ -226,6 +227,7 @@ namespace Pong.Game
                 _playWithBot = true;
             };
             _mainMenuPanel.AddChild(playBotButton);
+            playBotButton.Dock(Dock.FillHorizontally);
 
         }
 
