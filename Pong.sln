@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.7.34031.279
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11415.280 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pong.Desktop", "Pong.Desktop\Pong.Desktop.csproj", "{B1F840B1-E539-461D-8B2B-2555BCFE4BA9}"
 EndProject
@@ -99,9 +99,9 @@ Global
 		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|ARM64.ActiveCfg = Release|ARM64
 		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|ARM64.Build.0 = Release|ARM64
 		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|ARM64.Deploy.0 = Release|ARM64
-		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|x64.ActiveCfg = Release|x64
-		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|x64.Build.0 = Release|x64
-		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|x64.Deploy.0 = Release|x64
+		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|x64.ActiveCfg = Release|Any CPU
+		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|x64.Build.0 = Release|Any CPU
+		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|x64.Deploy.0 = Release|Any CPU
 		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|x86.ActiveCfg = Release|x86
 		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|x86.Build.0 = Release|x86
 		{D8D6FA82-F9AE-460B-A5FB-EF8934A5F887}.Release|x86.Deploy.0 = Release|x86
