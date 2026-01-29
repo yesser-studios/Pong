@@ -30,13 +30,26 @@ jobs:
       run: dotnet publish -c Release -o ./release ./Pong.Desktop/Pong.Desktop.csproj
     - name: Create tar.gz package
       run: |
+        rm ./release/*.dbg
+        tar -czvf linux-x64.tar.gz ./release
+        # butler push linux-x64.tar.gz yesseruser/pong:linux-x64
+    - name: Publish linux x64 to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        file: linux-x64.tar.gz
+    - name: Publish universal
+      run: |
+        rm -rf ./release
+        dotnet publish -c Release -o ./release -p:PublishAot=False ./Pong.Desktop/Pong.Desktop.csproj
+    - name: Create tar.gz package
+      run: |
+        rm ./release/*.pdb
         tar -czvf linux-universal.tar.gz ./release
-        butler push linux-universal.tar.gz yesseruser/pong:linux-x64
-    - name: Publish linux to release
+    - name: Publish linux universal to release
       uses: svenstaro/upload-release-action@v2
       with:
         file: linux-universal.tar.gz
-        
+
   build-windows:
     runs-on: windows-latest
     env:
@@ -53,10 +66,12 @@ jobs:
       run: dotnet restore
     - name: Publish
       run: dotnet publish -c Release -o ./release --self-contained ./Pong.Desktop/Pong.Desktop.csproj
+    - name: Remove debug info
+      run: rm ./release/*.pdb
     - name: Create zip package
       run: |
         7z a windows-x64.zip .\release\*
-        butler push windows-x64.zip yesseruser/pong:win64
+        # butler push windows-x64.zip yesseruser/pong:win64
     - name: Publish windows to release
       uses: svenstaro/upload-release-action@v2
       with:
@@ -77,7 +92,9 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Publish
-      run: dotnet publish -r osx-arm64 -c Release -o ./release -p:PublishSingleFile=False ./Pong.Desktop/Pong.Desktop.csproj
+      run: dotnet publish -r osx-arm64 -c Release -o ./release -p:PublishSingleFile=False -p:PublishAot=False ./Pong.Desktop/Pong.Desktop.csproj
+    - name: Remove debug info
+      run: rm -rf ./release/*.dsym
     - name: Move files to app bundle
       run: |
         mkdir -p ./mac-bundle/Contents/Resources/Content
@@ -87,7 +104,7 @@ jobs:
         mv ./release/* ./mac-bundle/Contents/MacOS
         chmod +x ./mac-bundle/Contents/MacOS/Pong
         mv ./mac-bundle ./Pong.app
-        butler push ./Pong.app yesseruser/pong:mac-arm64
+        # butler push ./Pong.app yesseruser/pong:mac-arm64
     - name: Archive app bundle
       run: tar -cvzf mac-arm64.app.tar.gz ./Pong.app
     - name: Publish Mac to release
