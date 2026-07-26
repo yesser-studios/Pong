@@ -402,3 +402,9 @@ repo/
 
 # OS-specific files
 *DS_Store
+
+# Nix result
+result
+
+# Direnv cache
+.direnv/

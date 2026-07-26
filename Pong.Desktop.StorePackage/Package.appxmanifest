@@ -31,7 +31,7 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="Pong by Yesser Studios for Windows"
+        DisplayName="Pong by Yesser Studios for PC"
         Description="Pong.Desktop.StorePackage"
         BackgroundColor="transparent"
         Square150x150Logo="Images\Square150x150Logo.png"
