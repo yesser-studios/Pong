@@ -84,13 +84,7 @@ namespace Pong.Game
             _graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             _graphics.IsFullScreen = true;
             
-#if DEBUG
-            // Make debug window borderless to allow breakpoints to redirect to IDE.
-            _graphics.HardwareModeSwitch = false;
-#endif
-            
-            if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                _graphics.HardwareModeSwitch = false; // Force borderless window on Mac & Linux
+            _graphics.HardwareModeSwitch = false; // Use borderless window
             
             _graphics.ApplyChanges();
 
