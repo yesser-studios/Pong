@@ -55,17 +55,25 @@
   </developer>
 
   <releases>
+    <release version="1.2.5" date="2026-8-22">
+        <description>
+          <h1>Changes in 1.2.5:</h1>
+          <ul>
+            <li>Bot mode can now be changed between rounds (instead of only at the start of the game).</li>
+          </ul>
+        </description>
+    </release>
     <release version="1.2.4" date="2025-10-15">
-    <description>
-      <p>Changes in 1.2.4:</p>
-      <ul>
-        <li>The bot mode keybind now only works when the game is not running.</li>
-      </ul>
-    </description>
+        <description>
+          <h1>Changes in 1.2.4:</h1>
+          <ul>
+            <li>The bot mode keybind now only works when the game is not running.</li>
+          </ul>
+        </description>
     </release>
 	  <release version="1.2.3" date="2025-04-13">
 		<description>
-			<p>Changes in 1.2.3:</p>
+			<h1>Changes in 1.2.3:</h1>
 			<ul>
 				<li>Pong now uses borderless windowed mode on Linux.</li>
 			</ul>
@@ -73,7 +81,7 @@
 	  </release>
 	  <release version="1.2.2" date="2024-10-09">
 		<description>
-			<p>Changes in 1.2.2:</p>
+			<h1>Changes in 1.2.2:</h1>
 			<ul>
 				<li>Fixed a bug where holding up arrow key on starting screen when playing against bot, the bot's pad would move up when moving left pad.</li>
 			</ul>
@@ -81,7 +89,7 @@
 	  </release>
 	  <release version="1.2.1" date="2024-09-29">
 		<description>
-			<p>Changes in 1.2.1:</p>
+			<h1>Changes in 1.2.1:</h1>
       			<ul>
         			<li>Fixed a bug where pressing Y on gamepad would flicker between playing against a bot and another player.</li>
         			<li>Restarting the game now returns pads to their original position.</li>
@@ -91,7 +99,7 @@
 	  <release version="1.2.0" date="2024-09-07">
 		<description>
 			<p>This is the initial release on Flathub.</p>
-			<p>Changes in 1.2.0:</p>
+			<h1>Changes in 1.2.0:</h1>
 			<ul>
 				<li>Added bot to play against</li>
 				<li>Released the game on Flathub</li>
