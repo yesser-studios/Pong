@@ -3,7 +3,7 @@
   <id>io.github.yesser_studios.Pong</id>
   
   <name>Pong</name>
-  <summary>A simple Pong clone</summary>
+  <summary>Simple Pong clone</summary>
   <url type="homepage">https://github.com/yesser-studios/Pong</url>
   <url type="bugtracker">https://github.com/yesser-studios/Pong/issues</url>
   <icon type="remote">https://raw.githubusercontent.com/yesser-studios/Pong/main/Pong.Desktop/Pong_Ball-1000.png</icon>
